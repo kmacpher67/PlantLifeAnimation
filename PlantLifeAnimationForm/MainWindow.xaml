@@ -1,0 +1,21 @@
+﻿<Window x:Name="loaded" x:Class="PlantLifeAnimationForm.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Plant Life Animation" Height="520" Width="640" Loaded="Window_Loaded">
+    <Window.Resources>
+        <ResourceDictionary>
+            <BitmapImage x:Key="main1" UriSource="images/main.png"/>
+            <BitmapImage x:Key="main2" UriSource="images/main2.jpg"/>
+            <BitmapImage x:Key="main3" UriSource="images/main3.jpg"/>
+            <BitmapImage x:Key="main4" UriSource="images/main4.jpg"/>
+            <BitmapImage x:Key="main5" UriSource="images/main5.jpg"/>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Image Name="ImageMain" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="480" Margin="0,0,0,0" VerticalAlignment="Top" Width="640" Source="{StaticResource main1}" MouseUp="ImageMain_MouseUp" />
+    </Grid>
+</Window>
