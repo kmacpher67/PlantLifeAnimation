@@ -3,12 +3,16 @@
 series of pictures of plant and life animated by human interactions. 
 A video camera using Computer Vision detects people and based on position, distance, and a number of variables the plants animate to life. 
 
+Make sure there is enough "root" filespace for this upgrade, the mono-complete, opencv, emgu takes about 5GB to perform. 
+
 Install EMGUCV into a working directory. 
 Follow EMGUCV installation steps from here: 
 http://www.emgu.com/wiki/index.php/Download_And_Installation#Raspbian_.28Raspberry_Pi_2.29
 To install mono
 
 ```
+sudo apt-get update
+sudo apt-get upgrade
 sudo apt-get install mono-complete
 sudo apt-get install git
 git clone git://git.code.sf.net/p/emgucv/code emgucv 
