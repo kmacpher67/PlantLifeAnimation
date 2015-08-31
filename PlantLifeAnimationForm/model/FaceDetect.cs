@@ -54,7 +54,7 @@ namespace PlantLifeAnimationForm
                     Gray avgf = new Gray();
                     MCvScalar avstd = new MCvScalar();
                     gray.AvgSdv(out avgf, out avstd);
-                    faceModel.StdDev = avstd.v0;
+                    faceModel.StdDev = avstd.V0;
 
                     currentFaces.Add(faceModel);
                     Console.WriteLine("FaceDetect Add faceModel" + faceModel.FaceScore);
