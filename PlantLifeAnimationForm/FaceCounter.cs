@@ -38,7 +38,7 @@ namespace PlantLifeAnimationForm
         {
             // there's only one channel (greyscale), hence the zero index
             //var faces = nextFrame.DetectHaarCascade(haar)[0];
-            using (Image<Bgr, byte> nextFrame = cap.QueryFrame())
+            using (Image<Bgr, byte> nextFrame = cap.QueryFrame().ToImage<Bgr, Byte>())
             {
                 lastImageCaptured = nextFrame;
                 grayframe = nextFrame.Convert<Gray, byte>();
