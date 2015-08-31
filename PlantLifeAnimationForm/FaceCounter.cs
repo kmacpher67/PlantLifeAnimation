@@ -103,7 +103,7 @@ namespace PlantLifeAnimationForm
                 //haar = new HaarCascade("..\\..\\..\\..\\lib\\haarcascade_frontalface_alt2.xml");
                 //haar = new HaarCascade("haar\\haarcascade_frontalface_default.xml");
                 // HaarCascade ?? OLD because I used old dll so it happened.
-                //Debug.WriteLine("has Cude GPU really? = " + GpuInvoke.HasCuda);
+                //Debug.WriteLine("has Cude Cuda really? = " + CudaInvoke.HasCuda);
                 // adjust path to find your xml
                 //face_cascade = new CascadeClassifier("haar\\haarcascade_frontalface_alt2.xml");
                 //haarcascade_frontalface_default.xml

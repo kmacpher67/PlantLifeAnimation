@@ -152,7 +152,7 @@ namespace PlantLifeAnimationForm
             try
             {
                 watch.Start();
-                //Debug.WriteLine("has Cude GPU really? = " + GpuInvoke.HasCuda);
+                //Debug.WriteLine("has Cude Cuda really? = " + CudaInvoke.HasCuda);
                 // adjust path to find your xml
                 //face_cascade = new CascadeClassifier("haar\\haarcascade_frontalface_alt2.xml");
                 //haarcascade_frontalface_default.xml
@@ -175,11 +175,11 @@ namespace PlantLifeAnimationForm
         void capturePicture()
         {
             //Debug.WriteLine("processFrameAndUpdateGUI");
-            imgOriginal = capWebcam.QueryFrame(); // gets next frame
+            imgOriginal = capWebcam.QueryFrame().ToImage<Bgr, Byte>(); // gets next frame
             if (imgOriginal == null) return;
             // (double)imageBoxOrig.Size.Width
             resizeImage = maxWidth / (double)imgOriginal.Size.Width;
-            imgProcessed = imgOriginal.Resize(resizeImage, INTER.CV_INTER_CUBIC);
+            imgProcessed = imgOriginal.Resize(resizeImage, Inter.Cubic);
 
         }
 
