@@ -92,8 +92,10 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -127,9 +129,15 @@
   <ItemGroup>
     <Compile Include="model\FaceScored.cs" />
     <Compile Include="model\FaceScoring.cs" />
-    <Compile Include="model\FaceDetect.cs" />
+    <Compile Include="model\FaceDetection.cs" />
     <Compile Include="model\PlantLifeImage.cs" />
     <Compile Include="model\PlantLifeImagesService.cs" />
+    <Compile Include="PlantLifeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlantLifeForm.Designer.cs">
+      <DependentUpon>PlantLifeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -143,6 +151,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="PlantLifeForm.resx">
+      <DependentUpon>PlantLifeForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -163,7 +174,9 @@
     <Resource Include="haar\haarcascade_frontalface_alt.xml" />
     <Resource Include="haar\haarcascade_frontalface_alt2.xml" />
     <Resource Include="haar\haarcascade_frontalface_default.xml" />
-    <Resource Include="haar\haarcascade_fullbody.xml" />
+    <Resource Include="haar\haarcascade_fullbody.xml">
+      <SubType>Designer</SubType>
+    </Resource>
     <Resource Include="haar\haarcascade_lefteye_2splits.xml" />
     <Resource Include="haar\haarcascade_licence_plate_rus_16stages.xml" />
     <Resource Include="haar\haarcascade_lowerbody.xml" />
@@ -208,6 +221,12 @@
     <Content Include="images\main.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FaceCapture\FaceCapture.csproj">
+      <Project>{08950e4d-5af1-457f-a815-2864062136ec}</Project>
+      <Name>FaceCapture</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

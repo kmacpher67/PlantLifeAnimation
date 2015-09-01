@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PlantLifeAnimationForm
 {
-    class FaceDetect 
+    class FaceDetection 
     {
 
         public double scaleFace = 1.08;
