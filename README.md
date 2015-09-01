@@ -10,6 +10,7 @@ Make sure there is enough "root" filespace for this upgrade, the mono-complete, 
 Install EMGUCV into a working directory. 
 Follow EMGUCV installation steps from here: 
 http://www.emgu.com/wiki/index.php/Download_And_Installation#Raspbian_.28Raspberry_Pi_2.29
+Check the list from EMGU that you have all the depedency. 
 To install mono
 
 ```
