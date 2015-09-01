@@ -27,8 +27,13 @@ namespace PlantLifeAnimationForm
         public string EyeTrainingFile { get; set; }
         public double Scale { get; set; }
         public int Neighbors { get; set; }
-        public int MinSize { get; set; }
+        public int FaceMinSize { get; set; }
+        public int FaceMaxSize { get; set; }
         public List<Face> Faces { get; set; }
+
+        public double motionHistoryDuration = 1.0;
+        public double maxDelta = 0.05;
+        public double minDelta = 0.5;
 
         private IFindFaces FaceDetector;
 
@@ -51,7 +56,8 @@ namespace PlantLifeAnimationForm
             EyeTrainingFile = eyeTrainingFile;
             Scale = scale;
             Neighbors = neighbors;
-            MinSize = minSize;
+            FaceMinSize = minSize;
+            FaceMaxSize = 200;
 
             if (CudaInvoke.HasCuda)
             {
@@ -63,9 +69,9 @@ namespace PlantLifeAnimationForm
             }
 
             _motionHistory = new MotionHistory(
-                1.0, //in second, the duration of motion history you wants to keep
-                0.05, //in second, maxDelta for cvCalcMotionGradient
-                0.5); //in second, minDelta for cvCalcMotionGradient
+                motionHistoryDuration, //in second, the duration of motion history you wants to keep
+                maxDelta, //in second, maxDelta for cvCalcMotionGradient
+                minDelta); //in second, minDelta for cvCalcMotionGradient
             //capture = new Capture();
         }
 
@@ -109,7 +115,7 @@ namespace PlantLifeAnimationForm
 
                 frameCount = frameCount + 1;
                 MotionInfo motion = this.GetMotionInfo(mat);
-                List<Face> detectedFaces = FaceDetector.FindFaces(ImageFrame, this.FaceTrainingFile, this.EyeTrainingFile, this.Scale, this.Neighbors, this.MinSize);
+                List<Face> detectedFaces = FaceDetector.FindFaces(ImageFrame, this.FaceTrainingFile, this.EyeTrainingFile, this.Scale, this.Neighbors, this.FaceMinSize);
 
                 if (frameCount > 2)
                 {
@@ -190,7 +196,7 @@ namespace PlantLifeAnimationForm
 
             MotionInfo motion = this.GetMotionInfo(mat);
 
-            List<Face> FoundFaces = FaceDetector.FindFaces(ImageFrame, this.FaceTrainingFile, this.EyeTrainingFile, this.Scale, this.Neighbors, this.MinSize);
+            List<Face> FoundFaces = FaceDetector.FindFaces(ImageFrame, this.FaceTrainingFile, this.EyeTrainingFile, this.Scale, this.Neighbors, this.FaceMinSize);
 
             foreach (Face face in FoundFaces)
             {

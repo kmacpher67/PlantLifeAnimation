@@ -26,7 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        public void InitializeComponent()
         {
             this.peoplePicture = new System.Windows.Forms.PictureBox();
             this.PlantLifePicture = new System.Windows.Forms.PictureBox();
@@ -61,6 +61,7 @@
             this.Name = "PlantLifeForm";
             this.Text = "PlantLifeForm";
             this.Load += new System.EventHandler(this.PlantLifeForm_Load);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PlantLifeForm_KeyPress);
             ((System.ComponentModel.ISupportInitialize)(this.peoplePicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PlantLifePicture)).EndInit();
             this.ResumeLayout(false);

@@ -15,6 +15,7 @@ namespace PlantLifeAnimationForm
         public int mainpicturecounter = 0;
         public PlantLifeImagesService plantlifeImages;
         FaceCounter faceCounter;
+        bool ShowPeoplePicture = true; 
 
         private bool captureInProgress;
         private FaceCapture faceCapture;
@@ -27,14 +28,15 @@ namespace PlantLifeAnimationForm
         };
 
         #region faceparams
+        string faceTrainingFile, eyeTrainingFile;
         double FaceScale = 1.1;
         int FaceNieghbors = 5;
         int FaceMinSize = 20;
-        #region
+        #endregion
 
         public PlantLifeForm()
         {
-            Console.WriteLine("main window starting con!!!");
+            Console.WriteLine("PlantLifeForm main window starting con!!!");
             InitializeComponent();
             var uri = new System.Uri("ms-appx:///images/logo.png");
             //var file = Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(uri);
@@ -46,7 +48,10 @@ namespace PlantLifeAnimationForm
 
             faceCounter = new FaceCounter();
 
-            faceCapture = new FaceCapture("haarcascade_frontalface_default.xml", "haarcascade_eye.xml");
+            faceCapture = new FaceCapture(faceTrainingFile, eyeTrainingFile);
+            faceCapture.Scale = FaceScale;
+            faceCapture.Neighbors = FaceNieghbors;
+            faceCapture.FaceMinSize = FaceMinSize;
             faceCapture.FaceCaptured += new FaceCapturedEventHandler(FaceCaptured);
 
 
@@ -62,11 +67,13 @@ namespace PlantLifeAnimationForm
         private void FaceCaptured(object sender, Face face)
         {
             // deal with face being captured here. (update)
+            SetFace(face);
         }
 
         private void SetFace(Face face){
 
             // do some logic to set face on screen. 
+            peoplePicture.Image = face.FaceImageFullColr; 
 
         }
         private void PlantLifePicture_Click(object sender, EventArgs e)
@@ -76,12 +83,19 @@ namespace PlantLifeAnimationForm
 
         private void ConfigLoad()
         {
+            Console.WriteLine(" plant life ConfigLoad");
             try
             {
+                faceTrainingFile = ConfigurationManager.AppSettings["faceTrainingFile"].ToString();
+                eyeTrainingFile = ConfigurationManager.AppSettings["eyeTrainingFile"].ToString(); 
                 FaceScale = double.Parse(ConfigurationManager.AppSettings["FaceScale"].ToString());
                 FaceNieghbors = int.Parse(ConfigurationManager.AppSettings["FaceNieghbors"].ToString());
                 FaceMinSize = int.Parse(ConfigurationManager.AppSettings["FaceMinSize"].ToString());
 
+            }
+            catch (Exception parseERR)
+            {
+                Console.WriteLine("ERROR -PlantLifeForm ConfigLoad" + parseERR); 
             }
         }
 
@@ -96,8 +110,8 @@ namespace PlantLifeAnimationForm
             else
             {
                 faceCapture.Scale = FaceScale; 
-                faceCapture.Neighbors = int.Parse(cboNeighbors.Text);
-                faceCapture.MinSize = int.Parse(cboNeighbors.Text);
+                faceCapture.Neighbors = FaceNieghbors;
+                faceCapture.FaceMinSize = FaceMinSize;
                 faceCapture.StartCapture();
             }
 
@@ -105,8 +119,28 @@ namespace PlantLifeAnimationForm
         }
         private void PlantLifeForm_Load(object sender, EventArgs e)
         {
+            faceCapture.StartCapture(); 
             Console.WriteLine("PlantLifeForm_Load ... ");
         }
+
+        private void PlantLifeForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //if ( < PlantLifePicture.ZOrder)
+            if (ShowPeoplePicture)
+            {
+                peoplePicture.SendToBack();
+                ShowPeoplePicture = false; 
+            }
+            else
+            {
+                peoplePicture.BringToFront();
+                ShowPeoplePicture = true; 
+            }
+
+        }
+
+
+
 
 
     }
