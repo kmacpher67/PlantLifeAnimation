@@ -24,7 +24,7 @@ cd platforms/raspian/
 sudo ./apt_install_dependency
 ./cmake_configure
 cd ../..
-sudo ./make 
+sudo make 
 sudo chown -R pi:pi * 
 ```
 The mono-complete takes about 5 minutes. 
