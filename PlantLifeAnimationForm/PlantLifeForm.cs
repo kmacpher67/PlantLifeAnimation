@@ -60,12 +60,18 @@ namespace PlantLifeAnimationForm
 
         }
 
+        void updatePlantImage()
+        {
+            //PlantLifePicture.Image = plantlifeImages.handleFacedScoredInput(null);
+        }
+
         void faceCapture_ImageCaptured(object sender)
         {
             if (faceCapture.ImageFrameLast != null && faceCapture.ImageFrameLast.Width != 0)
             {
                 double rs = (1.0 * peoplePicture.Size.Width / faceCapture.ImageFrameLast.Size.Width);
-                peoplePicture.Image = faceCapture.ImageFrameLast.Resize(rs, Inter.Cubic).ToBitmap(); 
+                peoplePicture.Image = faceCapture.ImageFrameLast.Resize(rs, Inter.Cubic).ToBitmap();
+                updatePlantImage();
             }
 
         }

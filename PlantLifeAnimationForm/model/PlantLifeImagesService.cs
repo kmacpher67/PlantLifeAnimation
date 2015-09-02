@@ -1,13 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+
 
 namespace PlantLifeAnimationForm
 {
@@ -21,14 +21,19 @@ namespace PlantLifeAnimationForm
 
         }
 
-        public BitmapImage handleFacedScoredInput(List<FaceScored> faces)
+        public Bitmap handleFacedScoredInput(List<FaceScored> faces)
         {
-            FaceScoring fsc = new FaceScoring();
-            FaceScored faceclosest = fsc.getClosest(faces);
-            FaceScored facefurthest = fsc.getFurthest(faces);
+            Bitmap bm = plantLifeImages.FirstOrDefault<PlantLifeImage>().PlantImage;
+            if (faces != null)
+            {
+                FaceScoring fsc = new FaceScoring();
+                FaceScored faceclosest = fsc.getClosest(faces);
+                FaceScored facefurthest = fsc.getFurthest(faces);
 
+                bm = plantLifeImages.Find(x => x.numberOfPeople == faces.Count).PlantImage;
+            }
 
-           return plantLifeImages.Find(x => x.numberOfPeople == faces.Count).PlantImage;        
+           return bm;        
         }
 
         /// <summary>
@@ -37,7 +42,7 @@ namespace PlantLifeAnimationForm
         /// <param name="targetDir"></param>
         public void loadImages(string targetDir = "images")
         {
-            Console.WriteLine("Service layer - plant life loadImages");
+            Console.WriteLine("plant life loadImages");
             string[] files = Directory.GetFiles(targetDir, "*");
             foreach (var f in files)
             {
@@ -50,20 +55,21 @@ namespace PlantLifeAnimationForm
             }
 
         }
-        public BitmapImage getImageFromFile(String filePath)
+        public Bitmap getImageFromFile(String filePath)
         {
             Console.WriteLine("getImageFromFile=" + filePath);
 
-            BitmapImage bitmapSource = new BitmapImage();
+            Bitmap bitmapSource = null;
             try
             {
+                bitmapSource = (Bitmap)System.Drawing.Image.FromFile(filePath);
                
-                Uri fileUri = new Uri(filePath, UriKind.Relative);
+                //Uri fileUri = new Uri(filePath, UriKind.Relative);
 
-                bitmapSource.BeginInit();
-                bitmapSource.CacheOption = BitmapCacheOption.None;
-                bitmapSource.UriSource = fileUri;
-                bitmapSource.EndInit();
+                //bitmapSource.BeginInit();
+                //bitmapSource.CacheOption = BitmapCacheOption.None;
+                //bitmapSource.UriSource = fileUri;
+                //bitmapSource.EndInit();
             }
             catch (Exception eek)
             {
