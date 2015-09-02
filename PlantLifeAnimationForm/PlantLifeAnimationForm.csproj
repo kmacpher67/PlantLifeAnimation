@@ -49,6 +49,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Emgu.CV.DebuggerVisualizers.VS2010.dll</HintPath>
     </Reference>
+    <Reference Include="Emgu.CV.DebuggerVisualizers.VS2012, Version=3.0.0.2131, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Emgu.CV.DebuggerVisualizers.VS2012.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.DebuggerVisualizers.VS2013, Version=3.0.0.2131, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Emgu.CV.DebuggerVisualizers.VS2013.dll</HintPath>
+    </Reference>
     <Reference Include="Emgu.CV.ML, Version=3.0.0.2131, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Emgu.CV.ML.dll</HintPath>
@@ -108,18 +116,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="FaceCounter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -170,22 +170,49 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="haar\haarcascade_eye.xml" />
-    <Resource Include="haar\haarcascade_eye_tree_eyeglasses.xml" />
-    <Resource Include="haar\haarcascade_frontalface_alt.xml" />
-    <Resource Include="haar\haarcascade_frontalface_alt2.xml" />
-    <Resource Include="haar\haarcascade_frontalface_default.xml" />
-    <Resource Include="haar\haarcascade_fullbody.xml">
+    <Content Include="haar\haarcascade_eye.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="haar\haarcascade_eye_tree_eyeglasses.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="haar\haarcascade_frontalface_alt.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="haar\haarcascade_frontalface_alt2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="haar\haarcascade_frontalface_default.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="haar\haarcascade_fullbody.xml">
       <SubType>Designer</SubType>
-    </Resource>
-    <Resource Include="haar\haarcascade_lefteye_2splits.xml" />
-    <Resource Include="haar\haarcascade_licence_plate_rus_16stages.xml" />
-    <Resource Include="haar\haarcascade_lowerbody.xml" />
-    <Resource Include="haar\haarcascade_profileface.xml" />
-    <Resource Include="haar\haarcascade_righteye_2splits.xml" />
-    <Resource Include="haar\haarcascade_russian_plate_number.xml" />
-    <Resource Include="haar\haarcascade_smile.xml" />
-    <Resource Include="haar\haarcascade_upperbody.xml" />
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="haar\haarcascade_lefteye_2splits.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="haar\haarcascade_licence_plate_rus_16stages.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="haar\haarcascade_lowerbody.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="haar\haarcascade_profileface.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="haar\haarcascade_righteye_2splits.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="haar\haarcascade_russian_plate_number.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="haar\haarcascade_smile.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="haar\haarcascade_upperbody.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="images\A2 SAMPLE MATRIX .jpg" />
     <Resource Include="images\0010.png" />
     <Resource Include="images\A1 SAMPLE MATRIX .jpg" />

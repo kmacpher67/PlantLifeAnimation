@@ -77,6 +77,7 @@ namespace PlantLifeAnimationForm
 
         public void StartCapture()
         {
+            Console.WriteLine("StartCapture");
             Faces = new List<Face>();
             capture = new Capture();
             _motionHistory = new MotionHistory(1.0, 0.05, 0.5);
@@ -85,6 +86,7 @@ namespace PlantLifeAnimationForm
 
         public void StopCapture()
         {
+            Console.WriteLine("StopCapture");
             Application.Idle -= ProcessFrame;
             capture.Dispose();
             capture = null;
@@ -187,8 +189,11 @@ namespace PlantLifeAnimationForm
         /// <param name="arg"></param>
         private void ProcessFrame(object sender, EventArgs arg)
         {
+
             Mat mat = capture.QueryFrame();
             Image<Bgr, Byte> ImageFrame = mat.ToImage<Bgr, Byte>();
+            Console.WriteLine("FaceCapture ProcessFrame start" + mat);
+
             if (ImageCaptured != null)
             {
                 ImageCaptured(this);
