@@ -35,6 +35,13 @@ namespace PlantLifeAnimationForm
         public double maxDelta = 0.05;
         public double minDelta = 0.5;
 
+        public int frameCount = 0; 
+
+        /// <summary>
+        /// average movement of pixels weighted smoothed .75 / .25 new
+        /// </summary>
+        public double averagetotalPixelCount =1;
+
         private IFindFaces FaceDetector;
 
         public Image<Bgr, Byte> ImageFrameLast;
@@ -192,7 +199,8 @@ namespace PlantLifeAnimationForm
 
             Mat mat = capture.QueryFrame();
             Image<Bgr, Byte> ImageFrame = mat.ToImage<Bgr, Byte>();
-            Console.WriteLine("FaceCapture ProcessFrame start" + mat);
+            if ((frameCount++)%17==0)
+                Console.WriteLine("FaceCapture ProcessFrame start frameCount=" + frameCount + " datetime" + DateTime.Now);
 
             if (ImageCaptured != null)
             {
@@ -296,7 +304,9 @@ namespace PlantLifeAnimationForm
             motionInfoObj.TotalMotions = rects.Length;
             motionInfoObj.MotionObjects = objectCount;
             motionInfoObj.MotionPixels = totalPixelCount;
-            Console.WriteLine(" GetMotionInfo - Total Motions found: " + rects.Length + "; Motion Pixel count: " + totalPixelCount);
+            averagetotalPixelCount = 0.75 * averagetotalPixelCount + 0.25 * totalPixelCount;
+            if ( Math.Abs(averagetotalPixelCount - totalPixelCount) / averagetotalPixelCount > 0.59)
+                Console.WriteLine(" GetMotionInfo - Total Motions found: " + rects.Length + "; Motion Pixel count: " + totalPixelCount);
          return motionInfoObj;
         }
     }

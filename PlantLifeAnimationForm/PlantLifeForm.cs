@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Emgu.CV.CvEnum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -36,7 +37,7 @@ namespace PlantLifeAnimationForm
 
         public PlantLifeForm()
         {
-            Console.WriteLine("PlantLifeForm main window starting con!!!");
+            Console.WriteLine("PlantLifeForm main window starting constructor!!!");
             InitializeComponent();
             var uri = new System.Uri("ms-appx:///images/logo.png");
             //var file = Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(uri);
@@ -55,13 +56,18 @@ namespace PlantLifeAnimationForm
             faceCapture.FaceCaptured += new FaceCapturedEventHandler(FaceCaptured);
             faceCapture.ImageCaptured += faceCapture_ImageCaptured;
 
-            Console.WriteLine("PlantLifeForm completed!!!");
+            Console.WriteLine("PlantLifeForm constructor completed!!!");
 
         }
 
         void faceCapture_ImageCaptured(object sender)
         {
-            peoplePicture.Image = faceCapture.ImageFrameLast.ToBitmap(); 
+            if (faceCapture.ImageFrameLast != null && faceCapture.ImageFrameLast.Width != 0)
+            {
+                double rs = (1.0 * peoplePicture.Size.Width / faceCapture.ImageFrameLast.Size.Width);
+                peoplePicture.Image = faceCapture.ImageFrameLast.Resize(rs, Inter.Cubic).ToBitmap(); 
+            }
+
         }
 
         /// <summary>

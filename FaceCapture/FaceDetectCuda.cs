@@ -19,8 +19,8 @@ namespace PlantLifeAnimationForm
             List<Rectangle> eyesRect = new List<Rectangle>();
             try
             {
-                Console.WriteLine(" FaceDetectGPU FindFaces faceFileName=" + faceFileName + " cuda = " + CudaInvoke.HasCuda);
-                using (CudaCascadeClassifier face = new CudaCascadeClassifier("haar_cuda\\haarcascade_frontalface_alt_tree.xml"))
+                //Console.WriteLine(" FaceDetectGPU FindFaces faceFileName=" + faceFileName + " cuda = " + CudaInvoke.HasCuda);
+                using (CudaCascadeClassifier face = new CudaCascadeClassifier("haar_cuda\\haarcascade_frontalface_default.xml"))
                 {
                     using (CudaImage<Bgr, Byte> CudaImage = new CudaImage<Bgr, byte>(image))
                     using (CudaImage<Gray, Byte> CudaGray = CudaImage.Convert<Gray, Byte>())
@@ -41,15 +41,19 @@ namespace PlantLifeAnimationForm
                                     facemodel.Height = facemodel.FaceImage.Height;
                                     facemodel.Width = facemodel.FaceImage.Width;
                                     facemodel.faceRect = f;
-                                    eyesRect.AddRange(FindEyes(eyeFileName, clone));
-                                    facemodel.eyesRects.AddRange(eyesRect);
-                                    facemodel.EyesCount = eyesRect.Count;
+                                    eyesRect = new List<Rectangle>(FindEyes(eyeFileName, clone));
+                                    if (eyesRect != null) {
+                                        facemodel.eyesRects = eyesRect;
+                                        facemodel.EyesCount = eyesRect.Count;
+                                    }
                                     Gray avgf = new Gray();
                                     MCvScalar avstd = new MCvScalar();
                                     clone.ToImage().AvgSdv(out avgf, out avstd);
                                     facemodel.StdDev = avstd.V0;
                                     faces.Add(facemodel);
-                                    Console.WriteLine("FaceDetect USING gpuCUDA Add faceModel" + facemodel.FaceScore);
+                                    if (facemodel.FaceScore>15)
+                                        Console.WriteLine("FaceDetect USING gpuCUDA Add faceModel" + facemodel.FaceScore);
+
                                     break;
                                 }
                             }
