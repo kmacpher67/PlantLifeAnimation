@@ -196,6 +196,7 @@ namespace PlantLifeAnimationForm
 
             if (ImageCaptured != null)
             {
+                ImageFrameLast = ImageFrame;
                 ImageCaptured(this);
             }
 
@@ -214,6 +215,7 @@ namespace PlantLifeAnimationForm
                 }
                 Faces.Add(face);
             }
+
         }
 
         private MotionInfo GetMotionInfo(Mat image)

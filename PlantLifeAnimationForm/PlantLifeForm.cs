@@ -53,10 +53,15 @@ namespace PlantLifeAnimationForm
             faceCapture.Neighbors = FaceNieghbors;
             faceCapture.FaceMinSize = FaceMinSize;
             faceCapture.FaceCaptured += new FaceCapturedEventHandler(FaceCaptured);
-
+            faceCapture.ImageCaptured += faceCapture_ImageCaptured;
 
             Console.WriteLine("PlantLifeForm completed!!!");
 
+        }
+
+        void faceCapture_ImageCaptured(object sender)
+        {
+            peoplePicture.Image = faceCapture.ImageFrameLast.ToBitmap(); 
         }
 
         /// <summary>
@@ -73,7 +78,7 @@ namespace PlantLifeAnimationForm
         private void SetFace(Face face){
 
             // do some logic to set face on screen. 
-            peoplePicture.Image = face.FaceImageFullColr; 
+            
 
         }
         private void PlantLifePicture_Click(object sender, EventArgs e)
