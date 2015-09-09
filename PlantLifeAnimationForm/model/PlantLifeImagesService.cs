@@ -21,7 +21,7 @@ namespace PlantLifeAnimationForm
 
         }
 
-        public Bitmap handleFacedScoredInput(List<FaceScored> faces)
+        public Bitmap handleFacedScoredInput(List<Face> faces)
         {
 
             Bitmap bm = plantLifeImages.FirstOrDefault<PlantLifeImage>().PlantImage;
@@ -29,20 +29,23 @@ namespace PlantLifeAnimationForm
             {
 
                 FaceScoring fsc = new FaceScoring();
-                FaceScored faceclosest = fsc.getClosest(faces);
-                FaceScored facefurthest = fsc.getFurthest(faces);
-                if (faces.Count==1)
+                //FaceScored faceclosest = fsc.getClosest(faces);
+                //FaceScored facefurthest = fsc.getFurthest(faces);
+                if (faces.Count>1)
                 {
-                    int faceWidth = faces[0].Width; 
-                    int plantlifeindex = (int)(faceWidth/320)*plantLifeImages.Count;
-                    plantlifeindex = (plantlifeindex >= plantLifeImages.Count) ? plantLifeImages.Count - 1 : plantlifeindex;
-                    bm = plantLifeImages[plantlifeindex].PlantImage;
-                }
-                else
-                {
-                    bm = plantLifeImages.Find(x => x.numberOfPeople == faces.Count).PlantImage;
-                }
+                    //  bm = plantLifeImages.Find(x => x.numberOfPeople == faces.Count).PlantImage;
+                    try {
+                        int faceWidth = faces[0].Width;
+                        int plantlifeindex = (int)(1.0 * faceWidth / 320 * plantLifeImages.Count);
+                        plantlifeindex = (plantlifeindex >= plantLifeImages.Count) ? plantLifeImages.Count - 1 : plantlifeindex;
+                        bm = plantLifeImages[plantlifeindex].PlantImage;
 
+                    }
+                    catch (Exception errint)
+                    {
+                        Console.WriteLine("ERROR - handleFacedScoredInput =" + errint);
+                    }
+                }
             }
 
            return bm;        
