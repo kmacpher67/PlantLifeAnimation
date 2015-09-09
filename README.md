@@ -45,3 +45,26 @@ After you get it installed local.
 Use the startx gui to run
 Menu - Programming - MonoDevelop 
 This will run a Visual Studio like application, use the File - Open - scroll and open the pla10.sln solution (or whatever version VS2010 version is in the directory) 
+
+# Animation Engine 
+The initial implementation of the Plant life animation engine will use the following variables (preceptions) 
+
+As the camera reads the scene (people are part of the art) the follow variables are used to display an image: 
+* DistanceAway
+* numberOfPeople
+* ImageType (tags Love, big, small, outdoors, water, mountain, animals, etc.) 
+* TimeOfDay (morning, noon, afternoon, evening, night, twilight) 
+
+Future imputs (percepts) could be: 
+* MotionMovementSpeed
+* FaceClusterProximity (ie: are people standing close to each other) 
+* Smiling (per face detected) 
+* Gender 
+* Emotion (happy, sad, mad, confused, etc) 
+* PersonHeight (taller vs shorter people) 
+* EnvironmentalTemperature (use a temperature probe to determine) 
+* WeatherOutdoors (use a web service to acquire) 
+
+## Rational agents Engine Designs 
+
+I'm currently looking at next generation engine version. This will not be avialble for the October 2015 due date. 
