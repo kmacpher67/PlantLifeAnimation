@@ -62,7 +62,7 @@ namespace PlantLifeAnimationForm
 
         void updatePlantImage()
         {
-            PlantLifePicture.Image = plantlifeImages.handleFacedScoredInput(null);
+            PlantLifePicture.Image = plantlifeImages.handleFacedScoredInput(faceCapture.Faces);
         }
 
         void faceCapture_ImageCaptured(object sender)

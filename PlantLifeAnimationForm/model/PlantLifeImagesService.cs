@@ -23,14 +23,26 @@ namespace PlantLifeAnimationForm
 
         public Bitmap handleFacedScoredInput(List<FaceScored> faces)
         {
+
             Bitmap bm = plantLifeImages.FirstOrDefault<PlantLifeImage>().PlantImage;
             if (faces != null)
             {
+
                 FaceScoring fsc = new FaceScoring();
                 FaceScored faceclosest = fsc.getClosest(faces);
                 FaceScored facefurthest = fsc.getFurthest(faces);
+                if (faces.Count==1)
+                {
+                    int faceWidth = faces[0].Width; 
+                    int plantlifeindex = (int)(faceWidth/320)*plantLifeImages.Count;
+                    plantlifeindex = (plantlifeindex >= plantLifeImages.Count) ? plantLifeImages.Count - 1 : plantlifeindex;
+                    bm = plantLifeImages[plantlifeindex].PlantImage;
+                }
+                else
+                {
+                    bm = plantLifeImages.Find(x => x.numberOfPeople == faces.Count).PlantImage;
+                }
 
-                bm = plantLifeImages.Find(x => x.numberOfPeople == faces.Count).PlantImage;
             }
 
            return bm;        

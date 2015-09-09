@@ -51,7 +51,7 @@ namespace PlantLifeAnimationForm
                                     clone.ToImage().AvgSdv(out avgf, out avstd);
                                     facemodel.StdDev = avstd.V0;
                                     faces.Add(facemodel);
-                                    if (facemodel.FaceScore>15)
+                                    if (facemodel.FaceScore>19)
                                         Console.WriteLine("FaceDetect USING gpuCUDA Add faceModel" + facemodel.FaceScore);
 
                                     break;

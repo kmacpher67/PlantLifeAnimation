@@ -31,6 +31,9 @@ namespace PlantLifeAnimationForm
         public int FaceMaxSize { get; set; }
         public List<Face> Faces { get; set; }
 
+        public int reductionWidth = 320;
+        public double reductionRatio = 1; // assumes input source is 320x200;  1/2 640/400
+
         public double motionHistoryDuration = 1.0;
         public double maxDelta = 0.05;
         public double minDelta = 0.5;
@@ -191,6 +194,7 @@ namespace PlantLifeAnimationForm
 
         /// <summary>
         /// main element of capturing the camera and playing back. 
+        /// Camera source input for capture.QueryFrame
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="arg"></param>
@@ -199,7 +203,7 @@ namespace PlantLifeAnimationForm
 
             Mat mat = capture.QueryFrame();
             Image<Bgr, Byte> ImageFrame = mat.ToImage<Bgr, Byte>();
-            if ((frameCount++)%17==0)
+            if ((frameCount++)%27==0)
                 Console.WriteLine("FaceCapture ProcessFrame start frameCount=" + frameCount + " datetime" + DateTime.Now);
 
             if (ImageCaptured != null)
@@ -210,7 +214,9 @@ namespace PlantLifeAnimationForm
 
             MotionInfo motion = this.GetMotionInfo(mat);
 
-            List<Face> FoundFaces = FaceDetector.FindFaces(ImageFrame, this.FaceTrainingFile, this.EyeTrainingFile, this.Scale, this.Neighbors, this.FaceMinSize);
+            reductionRatio = (double)reductionWidth / (double)ImageFrame.Width;
+
+            List<Face> FoundFaces = FaceDetector.FindFaces(ImageFrame.Resize(reductionRatio,Inter.Cubic), this.FaceTrainingFile, this.EyeTrainingFile, this.Scale, this.Neighbors, this.FaceMinSize);
 
             foreach (Face face in FoundFaces)
             {
