@@ -41,6 +41,8 @@ namespace PlantLifeAnimationForm
                                     facemodel.Height = facemodel.FaceImage.Height;
                                     facemodel.Width = facemodel.FaceImage.Width;
                                     facemodel.faceRect = f;
+                                    facemodel.framePosX = f.X;
+                                    facemodel.framePosY = f.Y; 
                                     eyesRect = new List<Rectangle>(FindEyes(eyeFileName, clone));
                                     if (eyesRect != null) {
                                         facemodel.eyesRects = eyesRect;

@@ -20,6 +20,10 @@ namespace PlantLifeAnimationForm
         public double MotionPixels { get; set; }
         public Rectangle faceRect { get; set; }
         public List<Rectangle> eyesRects { get; set; }
+
+        public int framePosX { get; set; }
+        public int framePosY { get; set; }
+
         public int FaceScore
         {
             get
