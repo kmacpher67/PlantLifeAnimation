@@ -16,6 +16,7 @@ namespace PlantLifeAnimationForm
     {
         public List<PlantLifeImage> plantLifeImages = new List<PlantLifeImage>();
         public List<PlantLifeImage> plantLifeImagesOver = new List<PlantLifeImage>();
+        public int currentOverlayIndex = 0; 
 
         public PlantLifeImagesService()
         {
@@ -59,9 +60,12 @@ namespace PlantLifeAnimationForm
            return bm;        
         }
 
-        public Bitmap appplyOverlayImage(Bitmap bm,int p)
+        public Bitmap appplyOverlayImage(Bitmap bm, int p = 0)
         {
             //TODO overlay image2 onto image1
+            asdf
+
+
             return bm;
         }
 

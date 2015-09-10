@@ -205,7 +205,9 @@
     <Content Include="haar\haarcascade_upperbody.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\butterfly\butterfly_1.gif" />
+    <Content Include="images\butterfly\butterfly_1.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="images\DeadFish\Dead_Fish_1.jpg" />
     <Content Include="images\DeadFish\Dead_Fish_2.jpg" />
     <Content Include="images\DeadFish\Dead_Fish_3.jpg" />
