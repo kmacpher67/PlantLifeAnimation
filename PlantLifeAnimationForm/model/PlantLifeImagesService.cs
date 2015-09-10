@@ -16,7 +16,9 @@ namespace PlantLifeAnimationForm
     {
         public List<PlantLifeImage> plantLifeImages = new List<PlantLifeImage>();
         public List<PlantLifeImage> plantLifeImagesOver = new List<PlantLifeImage>();
-        public int currentOverlayIndex = 0; 
+        public int currentOverlayIndex = 0;
+        public int currentOverlayFrame = 0;
+        public Size frameSize = new Size(640, 480);
 
         public PlantLifeImagesService()
         {
@@ -63,9 +65,33 @@ namespace PlantLifeAnimationForm
         public Bitmap appplyOverlayImage(Bitmap bm, int p = 0)
         {
             //TODO overlay image2 onto image1
-            asdf
+            try{
+                Bitmap finalImage = new Bitmap(frameSize.Width,frameSize.Height);
+                FrameDimension dimension = new FrameDimension(plantLifeImagesOver[0].PlantImage.FrameDimensionsList[0]);
+                // Number of frames
+                int frameCount = plantLifeImagesOver[0].PlantImage.GetFrameCount(dimension);
+                Bitmap[] overlayBMframes = ParseFrames( plantLifeImagesOver[0].PlantImage);
+                Bitmap img2 = overlayBMframes[currentOverlayFrame++];
+                if(currentOverlayFrame>=frameCount)
+                    currentOverlayFrame=0;
 
-
+                using (Graphics g = Graphics.FromImage(finalImage))
+                {
+                //go through each image and draw it on the final image (Notice the offset; since I want to overlay the images i won't have any offset between the images in the finalImage)
+                    int offset = 0;
+                    // only using hte main image adn overlay (initially it's a butterfly on crazy green background
+                    //foreach (Bitmap image in images)
+                    //{
+                        g.DrawImage(bm, new Rectangle(offset, 0, bm.Width, bm.Height));
+                        g.DrawImage(bm, new Rectangle(offset, 0, img2.Width, img2.Height));
+                    //} 
+                }
+                bm=finalImage;
+            }
+            catch(Exception errbm)
+            {
+                Console.WriteLine("ERROR -  appplyOverlayImage = " + errbm);
+            }
             return bm;
         }
 
@@ -141,6 +167,48 @@ namespace PlantLifeAnimationForm
             }
             return bitmapSource;
         }
+
+
+        /// <summary>
+        /// Parses individual Bitmap frames from a multi-frame Bitmap into an array of Bitmaps
+        /// Get the number of animation frames to copy into a Bitmap array
+        /// 
+        /// </summary>
+        /// <param name="Animation"></param>
+        /// <returns>Bitmap[] Copy the animation frame</returns>
+
+        public Bitmap[] ParseFrames(Bitmap Animation)
+        {
+            // Get the number of animation frames to copy into a Bitmap array
+
+            int Length = Animation.GetFrameCount(FrameDimension.Time);
+
+            // Allocate a Bitmap array to hold individual frames from the animation
+
+            Bitmap[] Frames = new Bitmap[Length];
+
+            // Copy the animation Bitmap frames into the Bitmap array
+
+            for (int Index = 0; Index < Length; Index++)
+            {
+                // Set the current frame within the animation to be copied into the Bitmap array element
+
+                Animation.SelectActiveFrame(FrameDimension.Time, Index);
+
+                // Create a new Bitmap element within the Bitmap array in which to copy the next frame
+
+                Frames[Index] = new Bitmap(Animation.Size.Width, Animation.Size.Height);
+
+                // Copy the current animation frame into the new Bitmap array element
+
+                Graphics.FromImage(Frames[Index]).DrawImage(Animation, new Point(0, 0));
+            }
+
+            // Return the array of Bitmap frames
+
+            return Frames;
+        }
+
 
         public void initializeJSONFile()
         {

@@ -49,6 +49,7 @@ namespace PlantLifeAnimationForm
             //var file = Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(uri);
             //ImageMain.Source= ImageSource
             plantlifeImages = new PlantLifeImagesService();
+            plantlifeImages.frameSize = this.PlantLifePicture.Size;
             plantlifeImages.initializeJSONFile();
 
             ConfigLoad();
@@ -181,11 +182,13 @@ namespace PlantLifeAnimationForm
                 {
                     this.WindowState = FormWindowState.Normal;
                     this.PlantLifePicture.Dock = DockStyle.Fill;
+                    plantlifeImages.frameSize = PlantLifePicture.Size;
                 }
                 else
                 {
                     this.WindowState = FormWindowState.Maximized;
                     this.PlantLifePicture.Dock = DockStyle.Fill;
+                    plantlifeImages.frameSize = PlantLifePicture.Size;
                 }
             }
         }
