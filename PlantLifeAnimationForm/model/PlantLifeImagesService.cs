@@ -28,7 +28,6 @@ namespace PlantLifeAnimationForm
 
         public Bitmap handleFacedScoredInput(List<Face> faces)
         {
-
             Bitmap bm = plantLifeImages.FirstOrDefault<PlantLifeImage>().PlantImage;
             if (faces != null)
             {
@@ -42,12 +41,13 @@ namespace PlantLifeAnimationForm
                     //  bm = plantLifeImages.Find(x => x.numberOfPeople == faces.Count).PlantImage;
                     try {
                         int faceWidth = faces[faces.Count-1].Width;
-                        int plantlifeindex = (int)(1.0 * faceWidth / 320 * plantLifeImages.Count);
+                        int plantlifeindex = (int)(1.0 * faceWidth / FaceScoring.FaceSizeMax * plantLifeImages.Count);
                         plantlifeindex = (plantlifeindex >= plantLifeImages.Count) ? plantLifeImages.Count - 1 : plantlifeindex;
                         bm = plantLifeImages[plantlifeindex].PlantImage;
                         if (faces[faces.Count - 1].framePosX > 99)
                         {
-                            Console.WriteLine("HOLY COW LESS TAN 100 frameposx=" + faces[faces.Count - 1].framePosX);
+                            if (faces.Count%5==0)
+                                Console.WriteLine(" -- plantlifeindex=" + plantlifeindex + " framePosX=" + faces[faces.Count - 1].framePosX);
                             // TODO stubbed out overlay image onto another image trickery
                             bm = appplyOverlayImage(bm, faces[faces.Count - 1].framePosX);
                         }
@@ -66,7 +66,7 @@ namespace PlantLifeAnimationForm
         {
             //TODO overlay image2 onto image1
             try{
-                Bitmap finalImage = new Bitmap(frameSize.Width,frameSize.Height);
+                Bitmap finalImage = (Bitmap)bm.Clone();
                 FrameDimension dimension = new FrameDimension(plantLifeImagesOver[0].PlantImage.FrameDimensionsList[0]);
                 // Number of frames
                 int frameCount = plantLifeImagesOver[0].PlantImage.GetFrameCount(dimension);
@@ -78,12 +78,16 @@ namespace PlantLifeAnimationForm
                 using (Graphics g = Graphics.FromImage(finalImage))
                 {
                 //go through each image and draw it on the final image (Notice the offset; since I want to overlay the images i won't have any offset between the images in the finalImage)
-                    int offset = 0;
+                    int offsetX = 0;
+                    int offsetY = 0;
                     // only using hte main image adn overlay (initially it's a butterfly on crazy green background
                     //foreach (Bitmap image in images)
                     //{
-                        g.DrawImage(bm, new Rectangle(offset, 0, bm.Width, bm.Height));
-                        g.DrawImage(bm, new Rectangle(offset, 0, img2.Width, img2.Height));
+                        g.DrawImage(bm, new Rectangle(offsetX, offsetY, bm.Width, bm.Height));
+                        // TODO set the overlay position based on face head position
+                        offsetX = bm.Width / 4;
+                        offsetY = bm.Height / 4;
+                        g.DrawImage(img2, new Rectangle(offsetX, offsetY, img2.Width, img2.Height));
                     //} 
                 }
                 bm=finalImage;

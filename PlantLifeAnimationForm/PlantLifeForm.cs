@@ -38,6 +38,8 @@ namespace PlantLifeAnimationForm
         int FaceMinSize = 20;
         #endregion
 
+        public int lastFaceIndex = 0; 
+
         public int reloadDirIndex = 0;
         public string[] reloaddir = {"images/Matrix","images/Dog","images/DeadFish", "images/horses", "images/Pond", "images/Fireworks"};
 
@@ -66,13 +68,15 @@ namespace PlantLifeAnimationForm
             faceCapture.FaceCaptured += new FaceCapturedEventHandler(FaceCaptured);
             faceCapture.ImageCaptured += faceCapture_ImageCaptured;
 
-            Console.WriteLine("PlantLifeForm constructor completed!!!");
 
+            // start off with default plant image: 
+               updatePlantImage();
+
+            Console.WriteLine("PlantLifeForm constructor completed!!!");
         }
 
         void updatePlantImage()
         {
-
             PlantLifePicture.Image = plantlifeImages.handleFacedScoredInput(faceCapture.Faces);
         }
 
@@ -84,15 +88,16 @@ namespace PlantLifeAnimationForm
             {
                 double rs = (1.0 * peoplePicture.Size.Width / currentFrame.Size.Width);
 
-                if (faceCapture.Faces != null && faceCapture.Faces.Count > 0)
+                if (faceCapture.Faces != null && faceCapture.Faces.Count > lastFaceIndex)
                 {
-                    Face currentFace = faceCapture.Faces[faceCapture.Faces.Count - 1];
+                    lastFaceIndex = faceCapture.Faces.Count - 1;
+                    Face currentFace = faceCapture.Faces[lastFaceIndex];
 
                     /// depreciated v2 - MCvFont f = new MCvFont(CvEnum.FONT.CV_FONT_HERSHEY_COMPLEX, 1.0, 1.0);
                     Rectangle rectFace = currentFace.faceRect;
                     currentFrame.Draw(rectFace, drawBoxColor, 3);
 
-                    String displayFaceData = "F#=" + faceCapture.Faces.Count + " Rx,y= " + rectFace.X + "," + rectFace.Y ;
+                    String displayFaceData = "F#=" + faceCapture.Faces.Count + " Rx,y=" + rectFace.X + "," + rectFace.Y ;
                     displayFaceData = displayFaceData + " P=" + currentFace.framePosX + " W=" + currentFace.Width + " Mo=" + currentFace.MotionPixels;
                     //Version 3.0 does it differently than version 2.0
                     //Draw "Hello, world." on the image using the specific font
@@ -103,9 +108,14 @@ namespace PlantLifeAnimationForm
                        FontFace.HersheyComplex,
                        rs / 2,
                        new Bgr(0, 255, 0).MCvScalar);
+                    peoplePicture.Image = currentFrame.Resize(rs, Inter.Cubic).ToBitmap();
+                    // only update plant image if the face is any good. 
+                    updatePlantImage();
                 }
-                peoplePicture.Image = currentFrame.Resize(rs, Inter.Cubic).ToBitmap();
-                updatePlantImage();
+                else if (lastFaceIndex > 1)
+                {
+                    lastFaceIndex = faceCapture.Faces.Count - 2;
+                }
             }
             }
 
