@@ -1,4 +1,6 @@
-﻿using Emgu.CV.CvEnum;
+﻿using Emgu.CV;
+using Emgu.CV.CvEnum;
+using Emgu.CV.Structure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +18,8 @@ namespace PlantLifeAnimationForm
         public int mainpicturecounter = 0;
         public PlantLifeImagesService plantlifeImages;
         FaceCounter faceCounter;
-        bool ShowPeoplePicture = true; 
+        bool ShowPeoplePicture = true;
+        Bgr drawBoxColor = new Bgr(0, double.MaxValue, 50);
 
         private bool captureInProgress;
         private FaceCapture faceCapture;
@@ -69,16 +72,41 @@ namespace PlantLifeAnimationForm
 
         void updatePlantImage()
         {
+
             PlantLifePicture.Image = plantlifeImages.handleFacedScoredInput(faceCapture.Faces);
         }
 
         void faceCapture_ImageCaptured(object sender)
         {
             if (faceCapture.ImageFrameLast != null && faceCapture.ImageFrameLast.Width != 0)
+            {                
+            using (Image<Bgr, byte> currentFrame = faceCapture.ImageFrameLast.Resize(faceCapture.reductionRatio,Inter.Cubic) )
             {
-                double rs = (1.0 * peoplePicture.Size.Width / faceCapture.ImageFrameLast.Size.Width);
-                peoplePicture.Image = faceCapture.ImageFrameLast.Resize(rs, Inter.Cubic).ToBitmap();
+                double rs = (1.0 * peoplePicture.Size.Width / currentFrame.Size.Width);
+
+                if (faceCapture.Faces != null && faceCapture.Faces.Count > 0)
+                {
+                    Face currentFace = faceCapture.Faces[faceCapture.Faces.Count - 1];
+
+                    /// depreciated v2 - MCvFont f = new MCvFont(CvEnum.FONT.CV_FONT_HERSHEY_COMPLEX, 1.0, 1.0);
+                    Rectangle rectFace = currentFace.faceRect;
+                    currentFrame.Draw(rectFace, drawBoxColor, 3);
+
+                    String displayFaceData = "F#=" + faceCapture.Faces.Count + " Rx,y= " + rectFace.X + "," + rectFace.Y ;
+                    displayFaceData = displayFaceData + " P=" + currentFace.framePosX + " W=" + currentFace.Width + " Mo=" + currentFace.MotionPixels;
+                    //Version 3.0 does it differently than version 2.0
+                    //Draw "Hello, world." on the image using the specific font
+                    CvInvoke.PutText(
+                       currentFrame,
+                       displayFaceData,
+                       new System.Drawing.Point(1, 15),
+                       FontFace.HersheyComplex,
+                       rs / 2,
+                       new Bgr(0, 255, 0).MCvScalar);
+                }
+                peoplePicture.Image = currentFrame.Resize(rs, Inter.Cubic).ToBitmap();
                 updatePlantImage();
+            }
             }
 
         }
