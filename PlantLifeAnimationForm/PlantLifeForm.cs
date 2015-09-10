@@ -35,6 +35,12 @@ namespace PlantLifeAnimationForm
         int FaceMinSize = 20;
         #endregion
 
+        public int reloadDirIndex = 0;
+        public string[] reloaddir = {"images/Matrix","images/Dog","images/DeadFish", "images/horses", "images/Pond", "images/Fireworks"};
+
+        public int reloadDirIndexOver = 0;
+        public string[] reloaddirOver = { "images/butterfly" };
+
         public PlantLifeForm()
         {
             Console.WriteLine("PlantLifeForm main window starting constructor!!!");
@@ -154,6 +160,34 @@ namespace PlantLifeAnimationForm
                 ShowPeoplePicture = true; 
             }
 
+        }
+
+        private void PlantLifeForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F9)
+            {
+                Console.WriteLine("F9 key pressed");
+                plantlifeImages.reloadImages(reloaddir[this.reloadDirIndex++]);
+
+                if (reloadDirIndex >= reloaddir.Length)
+                    reloadDirIndex = 0;
+                
+            }
+
+            if (e.KeyCode == Keys.F11)
+            {
+                Console.WriteLine("F11 KEY PRESSED");
+                if (this.WindowState == FormWindowState.Maximized)
+                {
+                    this.WindowState = FormWindowState.Normal;
+                    this.PlantLifePicture.Dock = DockStyle.Fill;
+                }
+                else
+                {
+                    this.WindowState = FormWindowState.Maximized;
+                    this.PlantLifePicture.Dock = DockStyle.Fill;
+                }
+            }
         }
 
 
