@@ -14,6 +14,12 @@ namespace PlantLifeAnimationForm
     {
         public List<FaceScored> lastFaces { get; set; }
 
+
+        /// <summary>
+        /// static variable used for scaling image array based on face size
+        /// </summary>
+        public static int FaceSizeMax = 120;
+
         public FaceScoring()
         {
 
