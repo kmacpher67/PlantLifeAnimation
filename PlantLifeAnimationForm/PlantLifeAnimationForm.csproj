@@ -205,37 +205,61 @@
     <Content Include="haar\haarcascade_upperbody.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\A2 SAMPLE MATRIX .jpg">
+    <Content Include="images\butterfly\butterfly_1.gif" />
+    <Content Include="images\DeadFish\Dead_Fish_1.jpg" />
+    <Content Include="images\DeadFish\Dead_Fish_2.jpg" />
+    <Content Include="images\DeadFish\Dead_Fish_3.jpg" />
+    <Content Include="images\DeadFish\Dead_Fish_5.jpg" />
+    <Content Include="images\DeadFish\Dead_Fish_6.jpg" />
+    <Content Include="images\DeadFish\Dead_Fish_7.jpg" />
+    <Content Include="images\DeadFish\Dead_fish_8.jpg" />
+    <Content Include="images\DeadFish\Dead_fish_9.jpg" />
+    <Content Include="images\Dog\Dog5.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\Dog\Dog_1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\Dog\Dog_2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\Dog\Dog_4.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\Dog\Dog_6.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\Matrix\A2 SAMPLE MATRIX .jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\0010.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\A1 SAMPLE MATRIX .jpg">
+    <Content Include="images\Matrix\A1 SAMPLE MATRIX .jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\A3 SAMPLE MATRIX .jpg">
+    <Content Include="images\Matrix\A3 SAMPLE MATRIX .jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\B1 SAMPLE MATRIX .jpg">
+    <Content Include="images\Matrix\B1 SAMPLE MATRIX .jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\B2 SAMPLE MATRIX .jpg">
+    <Content Include="images\Matrix\B2 SAMPLE MATRIX .jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\B3 SAMPLE MATRIX .jpg">
+    <Content Include="images\Matrix\B3 SAMPLE MATRIX .jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\Blue_sky_daytime_Flag.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\C1 SAMPLE MATRIX .jpg">
+    <Content Include="images\Matrix\C1 SAMPLE MATRIX .jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\C2 SAMPLE MATRIX .jpg">
+    <Content Include="images\Matrix\C2 SAMPLE MATRIX .jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\C3 SAMPLE MATRIX .jpg">
+    <Content Include="images\Matrix\C3 SAMPLE MATRIX .jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="haar_cuda\haarcascade_eye.xml">
@@ -277,265 +301,262 @@
     <Content Include="haar_cuda\haarcascade_upperbody.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\closer.jpg">
+    <Content Include="images\horses\closer.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\complex A1.jpg">
+    <Content Include="images\complex\complex A1.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\complex A2.jpg">
+    <Content Include="images\complex\complex A2.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\complex A3.jpg">
+    <Content Include="images\complex\complex A3.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\complex B1.jpg">
+    <Content Include="images\complex\complex B1.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\complex B2.jpg">
+    <Content Include="images\complex\complex B2.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\complex B3.jpg">
+    <Content Include="images\complex\complex B3.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\complex C1.jpg">
+    <Content Include="images\complex\complex C1.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\complex C2.jpg">
+    <Content Include="images\complex\complex C2.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\complex C3.jpg">
+    <Content Include="images\complex\complex C3.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Crazy_Fish.jpg">
+    <Content Include="images\DeadFish\Crazy_Fish.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Drought_Dry_day.jpg">
+    <Content Include="images\EmptyPond\Drought_Dry_day.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Empty_Pond1.jpg">
+    <Content Include="images\EmptyPond\Empty_Pond1.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Empty_pond_0.jpg">
+    <Content Include="images\EmptyPond\Empty_pond_0.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Empty_pond_3.jpg">
+    <Content Include="images\EmptyPond\Empty_pond_3.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Empty_pond_4.jpg">
+    <Content Include="images\EmptyPond\Empty_pond_4.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Empty_pond_5.jpg">
+    <Content Include="images\EmptyPond\Empty_pond_5.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Empty_pond_6.jpg">
+    <Content Include="images\EmptyPond\Empty_pond_6.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Empty_pond_7.jpg">
+    <Content Include="images\EmptyPond\Empty_pond_7.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Empty_pond_8.jpg">
+    <Content Include="images\EmptyPond\Empty_pond_8.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\face1-3.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\contact sheet sample.tiff">
+    <Content Include="images\horses\faraway.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\faraway.jpg">
+    <Content Include="images\Fireworks\Fireworks_1.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Fireworks_1.jpg">
+    <Content Include="images\Fireworks\Fireworks_10.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Fireworks_10.jpg">
+    <Content Include="images\Fireworks\Fireworks_11.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Fireworks_11.jpg">
+    <Content Include="images\Fireworks\Fireworks_12.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Fireworks_12.jpg">
+    <Content Include="images\Fireworks\Fireworks_14.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Fireworks_14.jpg">
+    <Content Include="images\Fireworks\Fireworks_15.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Fireworks_15.jpg">
+    <Content Include="images\Fireworks\Fireworks_16.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Fireworks_16.jpg">
+    <Content Include="images\Fireworks\Fireworks_17.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Fireworks_17.jpg">
+    <Content Include="images\Fireworks\Fireworks_2.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Fireworks_2.jpg">
+    <Content Include="images\Fireworks\Fireworks_3.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Fireworks_3.jpg">
+    <Content Include="images\Fireworks\Fireworks_4.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Fireworks_4.jpg">
+    <Content Include="images\Fireworks\Fireworks_5.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Fireworks_5.jpg">
+    <Content Include="images\Fireworks\Fireworks_6.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Fireworks_6.jpg">
+    <Content Include="images\Fireworks\Fireworks_7.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Fireworks_7.jpg">
+    <Content Include="images\Fireworks\Fireworks_8.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Fireworks_8.jpg">
+    <Content Include="images\Fireworks\Fireworks_9.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Fireworks_9.jpg">
+    <Content Include="images\Houses\Nice_House_Day_time.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Nice_House_Day_time.jpg">
+    <Content Include="images\OceanDay\Ocean_crazy.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_crazy.jpg">
+    <Content Include="images\OceanDay\Ocean_daytime.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_daytime.jpg">
+    <Content Include="images\OceanDay\Ocean_day_atlantic_19.5.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_day_atlantic_19.5.jpg">
+    <Content Include="images\OceanDay\Ocean_Day_time2.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_Day_time2.jpg">
+    <Content Include="images\OceanDay\Ocean_Day_time3.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_Day_time3.jpg">
+    <Content Include="images\OceanDay\Ocean_day_time_4.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_day_time_4.jpg">
+    <Content Include="images\OceanDay\Ocean_day_time_5.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_day_time_5.jpg">
+    <Content Include="images\OceanDay\Ocean_day_time_9.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_day_time_9.jpg">
+    <Content Include="images\OceanMorning\Ocean_landing_day_bird.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_landing_day_bird.jpg">
+    <Content Include="images\OceanMorning\Ocean_morning_atlantic.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_morning_atlantic.jpg">
+    <Content Include="images\OceanMorning\Ocean_morning_atlantic2.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_morning_atlantic2.jpg">
+    <Content Include="images\OceanMorning\Ocean_morning_atlantic4.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_morning_atlantic4.jpg">
+    <Content Include="images\OceanMorning\Ocean_morning_atlantic5.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_morning_atlantic5.jpg">
+    <Content Include="images\OceanMorning\Ocean_morning_atlantic6.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_morning_atlantic6.jpg">
+    <Content Include="images\OceanMorning\Ocean_morning_atlantic7.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_morning_atlantic7.jpg">
+    <Content Include="images\OceanMorning\Ocean_morning_atlantic8.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_morning_atlantic8.jpg">
+    <Content Include="images\OceanMorning\Ocean_morning_atlantic_10.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_morning_atlantic_10.jpg">
+    <Content Include="images\OceanMorning\Ocean_morning_atlantic_11.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_morning_atlantic_11.jpg">
+    <Content Include="images\OceanMorning\Ocean_morning_atlantic_12.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_morning_atlantic_12.jpg">
+    <Content Include="images\OceanMorning\Ocean_morning_atlantic_13.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_morning_atlantic_13.jpg">
+    <Content Include="images\OceanMorning\Ocean_morning_atlantic_14.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_morning_atlantic_14.jpg">
+    <Content Include="images\OceanMorning\Ocean_morning_atlantic_15.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_morning_atlantic_15.jpg">
+    <Content Include="images\OceanMorning\Ocean_morning_atlantic_16.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_morning_atlantic_16.jpg">
+    <Content Include="images\OceanMorning\Ocean_morning_atlantic_17.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_morning_atlantic_17.jpg">
+    <Content Include="images\OceanMorning\Ocean_morning_atlantic_19.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_morning_atlantic_19.jpg">
+    <Content Include="images\OceanMorning\Ocean_morning_atlantic_21.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ocean_morning_atlantic_21.jpg">
+    <Content Include="images\ping\Ping complex A1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ping complex A1.png">
+    <Content Include="images\ping\Ping complex A2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ping complex A2.png">
+    <Content Include="images\ping\Ping complex A3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ping complex A3.png">
+    <Content Include="images\ping\Ping complex B1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ping complex B1.png">
+    <Content Include="images\ping\Ping complex B2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ping complex B2.png">
+    <Content Include="images\ping\Ping complex B3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ping complex B3.png">
+    <Content Include="images\ping\Ping complex C1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ping complex C1.png">
+    <Content Include="images\ping\Ping complex C2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ping complex C2.png">
+    <Content Include="images\ping\Ping complex C3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Ping complex C3.png">
+    <Content Include="images\Pond\Pond_evening.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Pond_evening.jpg">
+    <Content Include="images\Pond\Pond_Night_sunset.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Pond_Night_sunset.jpg">
+    <Content Include="images\Pond\Pond_Night_sunset_2.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Pond_Night_sunset_2.jpg">
+    <Content Include="images\Pond\Pond_scene_evening.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Pond_scene_evening.jpg">
+    <Content Include="images\Houses\Trumbull_CourtHouse_Night.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Trumbull_CourtHouse_Night.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="images\Water_Pond_outside_daytime.jpg">
+    <Content Include="images\Pond\Water_Pond_outside_daytime.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="model\images.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\main5.jpg">
+    <Content Include="images\main\main5.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\main4.jpg">
+    <Content Include="images\main\main4.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\main3.jpg">
+    <Content Include="images\main\main3.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\main2.jpg">
+    <Content Include="images\main\main2.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\main.png">
+    <Content Include="images\main\main.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -545,6 +566,7 @@
       <Name>FaceCapture</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

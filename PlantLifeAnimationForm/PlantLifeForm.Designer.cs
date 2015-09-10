@@ -62,6 +62,7 @@
             this.Text = "PlantLifeForm";
             this.Load += new System.EventHandler(this.PlantLifeForm_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PlantLifeForm_KeyPress);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.PlantLifeForm_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.peoplePicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PlantLifePicture)).EndInit();
             this.ResumeLayout(false);
