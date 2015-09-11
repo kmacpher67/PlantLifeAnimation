@@ -38,12 +38,15 @@ namespace PlantLifeAnimationForm
         public double maxDelta = 0.05;
         public double minDelta = 0.5;
 
-        public int frameCount = 0; 
+        public int frameCount = 0;
+        public Size captureScreenSize = new Size();
 
         /// <summary>
         /// average movement of pixels weighted smoothed .75 / .25 new
         /// </summary>
         public double averagetotalPixelCount =1;
+        public double motionPixelsAvg = 0;
+        public double motionPixelsSmooth = 0.8; 
 
         private IFindFaces FaceDetector;
 
@@ -55,7 +58,7 @@ namespace PlantLifeAnimationForm
         public event ImageCapturedEventHandler ImageCaptured;
 
         public FaceCapture(string faceTrainingFile, string eyeTrainingFile)
-            : this(faceTrainingFile, eyeTrainingFile, 1.1, 10, 100)
+            : this(faceTrainingFile, eyeTrainingFile, 1.1, 8, 80)
         {
 
         }
@@ -124,6 +127,7 @@ namespace PlantLifeAnimationForm
             {
                 Mat mat = capture.QueryFrame();
                 Image<Bgr, Byte> ImageFrame = mat.ToImage<Bgr, Byte>();
+                captureScreenSize = mat.Size;
 
                 frameCount = frameCount + 1;
                 MotionInfo motion = this.GetMotionInfo(mat);
@@ -222,6 +226,8 @@ namespace PlantLifeAnimationForm
             {
                 face.MotionObjects = motion.MotionObjects;
                 face.MotionPixels = motion.MotionPixels;
+                motionPixelsAvg = motionPixelsAvg*motionPixelsSmooth + motion.MotionPixels*(1-motionPixelsSmooth);
+                face.MotionPixelsAvg = motionPixelsAvg;
 
                 if (FaceCaptured != null)
                 {
@@ -311,7 +317,7 @@ namespace PlantLifeAnimationForm
             motionInfoObj.MotionObjects = objectCount;
             motionInfoObj.MotionPixels = totalPixelCount;
             averagetotalPixelCount = 0.75 * averagetotalPixelCount + 0.25 * totalPixelCount;
-            if ( Math.Abs(averagetotalPixelCount - totalPixelCount) / averagetotalPixelCount > 0.59)
+            if ( Math.Abs(averagetotalPixelCount - totalPixelCount) / averagetotalPixelCount > 0.69)
                 Console.WriteLine(" GetMotionInfo - Total Motions found: " + rects.Length + "; Motion Pixel count: " + totalPixelCount);
          return motionInfoObj;
         }

@@ -45,9 +45,9 @@ namespace PlantLifeAnimationForm
                                         facemodel.FaceImage = clone.Bitmap;
                                         facemodel.Height = facemodel.FaceImage.Height;
                                         facemodel.Width = facemodel.FaceImage.Width;
-                                        facemodel.faceRect = f;
+                                        facemodel.FaceRect = f;
                                         eyesRect.AddRange(eyesDetected);
-                                        facemodel.eyesRects.AddRange(eyesRect);
+                                        facemodel.EyesRects.AddRange(eyesRect);
                                         facemodel.EyesCount = eyesRect.Count;
                                         Gray avgf = new Gray();
                                         MCvScalar avstd = new MCvScalar();

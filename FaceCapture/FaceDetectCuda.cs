@@ -40,12 +40,13 @@ namespace PlantLifeAnimationForm
                                     facemodel.FaceImage = clone.Bitmap;
                                     facemodel.Height = facemodel.FaceImage.Height;
                                     facemodel.Width = facemodel.FaceImage.Width;
-                                    facemodel.faceRect = f;
-                                    facemodel.framePosX = f.X;
-                                    facemodel.framePosY = f.Y; 
+                                    facemodel.FaceRect = f;
+                                    facemodel.FramePosX = f.X;
+                                    facemodel.FramePosY = f.Y;
+                                    facemodel.ImageFrameSize = image.Size;
                                     eyesRect = new List<Rectangle>(FindEyes(eyeFileName, clone));
                                     if (eyesRect != null) {
-                                        facemodel.eyesRects = eyesRect;
+                                        facemodel.EyesRects = eyesRect;
                                         facemodel.EyesCount = eyesRect.Count;
                                     }
                                     Gray avgf = new Gray();
@@ -53,7 +54,7 @@ namespace PlantLifeAnimationForm
                                     clone.ToImage().AvgSdv(out avgf, out avstd);
                                     facemodel.StdDev = avstd.V0;
                                     faces.Add(facemodel);
-                                    if (facemodel.FaceScore>19)
+                                    if (facemodel.FaceScore>39)
                                         Console.WriteLine("FaceDetect USING gpuCUDA Add faceModel" + facemodel.FaceScore);
 
                                     break;

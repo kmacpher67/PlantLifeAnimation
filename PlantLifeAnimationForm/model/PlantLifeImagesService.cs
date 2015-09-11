@@ -18,7 +18,11 @@ namespace PlantLifeAnimationForm
         public List<PlantLifeImage> plantLifeImagesOver = new List<PlantLifeImage>();
         public int currentOverlayIndex = 0;
         public int currentOverlayFrame = 0;
-        public Size frameSize = new Size(640, 480);
+        public List<Int16> currentOverlayFrames = new List<Int16>();
+        public Size frameSize = new Size(1062, 573);
+
+        public double thresholdMotionValue = 9999;
+        public string rapidMotionOverlay = "images/butterfly\\animated-butterfly-image-0005.gif"; 
 
         public PlantLifeImagesService()
         {
@@ -44,12 +48,22 @@ namespace PlantLifeAnimationForm
                         int plantlifeindex = (int)(1.0 * faceWidth / FaceScoring.FaceSizeMax * plantLifeImages.Count);
                         plantlifeindex = (plantlifeindex >= plantLifeImages.Count) ? plantLifeImages.Count - 1 : plantlifeindex;
                         bm = plantLifeImages[plantlifeindex].PlantImage;
-                        if (faces[faces.Count - 1].framePosX > 99)
+                        if (faces[faces.Count - 1].FramePosX > 99)
                         {
                             if (faces.Count%5==0)
-                                Console.WriteLine(" -- plantlifeindex=" + plantlifeindex + " framePosX=" + faces[faces.Count - 1].framePosX);
+                                Console.WriteLine(" -- plantlifeindex=" + plantlifeindex + " framePosX=" + faces[faces.Count - 1].FramePosX);
                             // TODO stubbed out overlay image onto another image trickery
-                            bm = appplyOverlayImage(bm, faces[faces.Count - 1].framePosX);
+                            bm = appplyOverlayImage(bm, findOverlayIndexByFaceData(faces[faces.Count - 1]));
+                            if(faces[faces.Count - 1].MotionPixelsAvg>thresholdMotionValue)
+                            {
+                                int oindex = findOverlayIndexByName(rapidMotionOverlay);
+                                bm = appplyOverlayImage(bm, oindex);
+                            }
+                            double deviation = (faces[faces.Count - 1].MotionPixelsAvg / thresholdMotionValue);
+                            if (deviation > 5 || deviation<0.2)
+                            {
+                                thresholdMotionValue = faces[faces.Count - 1].MotionPixelsAvg;
+                            }
                         }
                     }
                     catch (Exception errint)
@@ -62,12 +76,60 @@ namespace PlantLifeAnimationForm
            return bm;        
         }
 
+        public int findOverlayIndexByFaceData(Face faceTarget)
+        {
+            int olay = 0;
+
+            int totalNumber = plantLifeImagesOver.Count();
+
+            double scaleIndex = (double)faceTarget.FramePosX / 1299.0;
+            if (scaleIndex > 0.99)
+                scaleIndex = 0.99;
+
+            olay = Convert.ToInt32(scaleIndex * totalNumber);
+
+            return olay; 
+        }
+
+        public int findOverlayIndexByName(string filename)
+        {
+            int pos=0;
+            try{
+                pos = plantLifeImagesOver.FindLastIndex(x => x.ImageFileName == filename);
+                }
+            catch(Exception errname){
+                Console.WriteLine("findOverlayIndexByName=" + errname);
+            }
+            
+            return pos;
+        }
+        public Bitmap getPlantLifeImageByKey(int p = 0)
+        {
+            Bitmap overlayImage = (Bitmap)plantLifeImagesOver[0].PlantImage.Clone();
+
+            try
+            {
+                overlayImage = (Bitmap)plantLifeImagesOver[p].PlantImage.Clone();
+            }
+            catch (Exception errOverlay)
+            {
+                Console.WriteLine("getPlantLifeImageByKey=" + errOverlay);
+            }
+            return overlayImage;
+        }
+
+        /// <summary>
+        /// bm is the main background image and p is the overlay image index from the plant life overlay for this scene
+        /// </summary>
+        /// <param name="bm"></param>
+        /// <param name="p"></param>
+        /// <returns></returns>
         public Bitmap appplyOverlayImage(Bitmap bm, int p = 0)
         {
             //TODO overlay image2 onto image1
             try{
                 Bitmap finalImage = (Bitmap)bm.Clone();
-                FrameDimension dimension = new FrameDimension(plantLifeImagesOver[0].PlantImage.FrameDimensionsList[0]);
+                FrameDimension dimension = new FrameDimension(getPlantLifeImageByKey(p).FrameDimensionsList[0]);
                 // Number of frames
                 int frameCount = plantLifeImagesOver[0].PlantImage.GetFrameCount(dimension);
                 Bitmap[] overlayBMframes = ParseFrames( plantLifeImagesOver[0].PlantImage);
@@ -108,8 +170,10 @@ namespace PlantLifeAnimationForm
                 PlantLifeImage plantLifeImage = new PlantLifeImage();
                 plantLifeImage.PlantImage = getImageFromFile(f);
                 plantLifeImage.ImageFileName = f;
+                Console.Write("fn=" + f + " ");
                 plantLifeImage.ImageName = f;
                 plantLifeImage.ImageType = targetDir;
+                Console.Write(" targetDir=" + targetDir + " ");
                 plantLifeImagesOver.Add(plantLifeImage);
 
                 FrameDimension dimension = new FrameDimension(plantLifeImage.PlantImage.FrameDimensionsList[0]);

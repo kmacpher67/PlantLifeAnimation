@@ -94,11 +94,11 @@ namespace PlantLifeAnimationForm
                     Face currentFace = faceCapture.Faces[lastFaceIndex];
 
                     /// depreciated v2 - MCvFont f = new MCvFont(CvEnum.FONT.CV_FONT_HERSHEY_COMPLEX, 1.0, 1.0);
-                    Rectangle rectFace = currentFace.faceRect;
+                    Rectangle rectFace = currentFace.FaceRect;
                     currentFrame.Draw(rectFace, drawBoxColor, 3);
 
                     String displayFaceData = "F#=" + faceCapture.Faces.Count + " Rx,y=" + rectFace.X + "," + rectFace.Y ;
-                    displayFaceData = displayFaceData + " P=" + currentFace.framePosX + " W=" + currentFace.Width + " Mo=" + currentFace.MotionPixels;
+                    displayFaceData = displayFaceData + " P=" + currentFace.FramePosX + " W=" + currentFace.Width + " Mo=" + currentFace.MotionPixels;
                     //Version 3.0 does it differently than version 2.0
                     //Draw "Hello, world." on the image using the specific font
                     CvInvoke.PutText(
