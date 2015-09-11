@@ -18,11 +18,15 @@ namespace PlantLifeAnimationForm
         public double StdDev { get; set; }
         public double MotionObjects { get; set; }
         public double MotionPixels { get; set; }
-        public Rectangle faceRect { get; set; }
-        public List<Rectangle> eyesRects { get; set; }
+        public double MotionPixelsAvg { get; set; }
+        public Rectangle FaceRect { get; set; }
+        public List<Rectangle> EyesRects { get; set; }
 
-        public int framePosX { get; set; }
-        public int framePosY { get; set; }
+        public int FramePosX { get; set; }
+        public int FramePosY { get; set; }
+
+        public Size ImageFrameSize { get; set; }
+
 
         public int FaceScore
         {
