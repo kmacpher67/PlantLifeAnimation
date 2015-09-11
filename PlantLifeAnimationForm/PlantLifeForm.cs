@@ -50,6 +50,7 @@ namespace PlantLifeAnimationForm
         {
             Console.WriteLine("PlantLifeForm main window starting constructor!!!");
             InitializeComponent();
+            this.PlantLifePicture.Size=this.DesktopBounds.Size;
             var uri = new System.Uri("ms-appx:///images/logo.png");
             //var file = Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(uri);
             //ImageMain.Source= ImageSource
@@ -219,16 +220,35 @@ namespace PlantLifeAnimationForm
                 if (this.WindowState == FormWindowState.Maximized)
                 {
                     this.WindowState = FormWindowState.Normal;
-                    this.PlantLifePicture.Dock = DockStyle.Fill;
+                    this.MaximizeBox = true;
+                    this.PlantLifePicture.Size = this.Size;
                     plantlifeImages.frameSize = PlantLifePicture.Size;
                 }
                 else
                 {
                     this.WindowState = FormWindowState.Maximized;
-                    this.PlantLifePicture.Dock = DockStyle.Fill;
+                    this.MaximizeBox = true;
+                    this.PlantLifePicture.Size = this.Size;
                     plantlifeImages.frameSize = PlantLifePicture.Size;
+
                 }
             }
+        }
+
+        private void PlantLifeForm_MaximizedBoundsChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("PlantLifeForm_MaximizedBoundsChanged e=" + e.ToString());
+            this.PlantLifePicture.Size = this.DesktopBounds.Size;
+            this.PlantLifePicture.Dock = DockStyle.Fill;
+            plantlifeImages.frameSize = PlantLifePicture.Size;
+        }
+
+        private void PlantLifeForm_ResizeEnd(object sender, EventArgs e)
+        {
+            Console.WriteLine("PlantLifeForm_ResizeEnd e=" + e.ToString());
+            this.PlantLifePicture.Size = this.Size;
+            this.PlantLifePicture.Dock = DockStyle.Fill;
+            plantlifeImages.frameSize = PlantLifePicture.Size;
         }
 
 
