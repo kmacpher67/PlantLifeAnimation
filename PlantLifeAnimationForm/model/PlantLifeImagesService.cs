@@ -220,8 +220,11 @@ namespace PlantLifeAnimationForm
             Bitmap bitmapSource = null;
             try
             {
-                bitmapSource = (Bitmap)System.Drawing.Image.FromFile(filePath);
-               
+                using (Bitmap temp = (Bitmap)System.Drawing.Image.FromFile(filePath))
+                {
+                    bitmapSource = (Bitmap)temp.Clone();
+                }
+                
                 //Uri fileUri = new Uri(filePath, UriKind.Relative);
 
                 //bitmapSource.BeginInit();
