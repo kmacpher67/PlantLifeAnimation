@@ -26,6 +26,7 @@ namespace PlantLifeAnimationForm
 
         public PlantLifeImagesService()
         {
+            Bitmap bmONE =  getImageFromFile("images/butterfly/animated-butterfly-image-0005.gif");
             loadImages("images/complex");
             loadOverlayImages(); // use default butterfly
         }
