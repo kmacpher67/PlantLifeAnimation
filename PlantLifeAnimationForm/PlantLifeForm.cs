@@ -17,7 +17,6 @@ namespace PlantLifeAnimationForm
     {
         public int mainpicturecounter = 0;
         public PlantLifeImagesService plantlifeImages;
-        FaceCounter faceCounter;
         bool ShowPeoplePicture = true;
         Bgr drawBoxColor = new Bgr(0, double.MaxValue, 50);
 
@@ -60,7 +59,7 @@ namespace PlantLifeAnimationForm
 
             ConfigLoad();
 
-            faceCounter = new FaceCounter();
+
 
             faceCapture = new FaceCapture(faceTrainingFile, eyeTrainingFile);
             faceCapture.Scale = FaceScale;
