@@ -70,6 +70,21 @@ namespace PlantLifeAnimationForm
 
             FaceCapture.HasCuda = HasCuda;
 
+            var oclptr = OclInvoke.GetPlatformInfo();
+            if (oclptr.Size < 1)
+            {
+                Console.WriteLine("NO OCL GPUs FOUND!!!");
+            }
+            else
+            {
+                var myb = oclptr[0];
+                var myb1 = oclptr[oclptr.Size - 1];
+                //OclPlatformInfo opi = (OclPlatformInfo)listinfo;
+                Console.WriteLine("GPU CUDA OCL checker size=" + oclptr.Size + " GPU0= " + myb + " GPU1=" + myb1);
+                // size=2 GPU0= Intel(R) OpenCL GPU1=NVIDIA CUDA
+            }
+
+
             if (HasCuda)
             {
                 faceTrainingFile = faceTrainingFileCuda;
