@@ -31,6 +31,11 @@ namespace PlantLifeAnimationForm
         public int FaceMaxSize { get; set; }
         public List<Face> Faces { get; set; }
 
+        public double EyeScale { get; set; }
+        public int EyeNeighbors { get; set; }
+        public int EyeFaceMinSize { get; set; }
+        public int EyeFaceMaxSize { get; set; }
+
         public int reductionWidth = 320;
         public double reductionRatio = 1; // assumes input source is 320x200;  1/2 640/400
 
@@ -49,6 +54,7 @@ namespace PlantLifeAnimationForm
         public double motionPixelsSmooth = 0.8; 
 
         private IFindFaces FaceDetector;
+        public static bool HasCuda = false;
 
         public Image<Bgr, Byte> ImageFrameLast;
         public Image<Bgr, Byte> ImageMotionLast;
@@ -72,12 +78,20 @@ namespace PlantLifeAnimationForm
             FaceMinSize = minSize;
             FaceMaxSize = 200;
 
-            if (CudaInvoke.HasCuda)
+            try
             {
-                FaceDetector = new FaceDetectCuda();
+                if (HasCuda && CudaInvoke.HasCuda)
+                {
+                    FaceDetector = new FaceDetectCuda();
+                }
+                else
+                {
+                    FaceDetector = new FaceDetect();
+                }
             }
-            else
+            catch (Exception errCuda)
             {
+                Console.WriteLine("ERROR - FaceCapture HasCuda="+HasCuda+" err=" + errCuda);
                 FaceDetector = new FaceDetect();
             }
 

@@ -20,7 +20,7 @@ namespace PlantLifeAnimationForm
             try
             {
                 //Console.WriteLine(" FaceDetectGPU FindFaces faceFileName=" + faceFileName + " cuda = " + CudaInvoke.HasCuda);
-                using (CudaCascadeClassifier face = new CudaCascadeClassifier("haar_cuda\\haarcascade_frontalface_default.xml"))
+                using (CudaCascadeClassifier face = new CudaCascadeClassifier(faceFileName))
                 {
                     using (CudaImage<Bgr, Byte> CudaImage = new CudaImage<Bgr, byte>(image))
                     using (CudaImage<Gray, Byte> CudaGray = CudaImage.Convert<Gray, Byte>())
@@ -37,6 +37,16 @@ namespace PlantLifeAnimationForm
                                 using (CudaImage<Gray, Byte> clone = faceImg.Clone(null))
                                 {
                                     Face facemodel = new Face();
+                                    eyesRect = new List<Rectangle>(FindEyes(eyeFileName, clone));
+                                    if (eyesRect != null)
+                                    {
+                                        facemodel.EyesRects = eyesRect;
+                                        facemodel.EyesCount = eyesRect.Count;
+                                    }
+                                    else
+                                    {
+                                        continue;
+                                    }
                                     facemodel.FaceImage = clone.Bitmap;
                                     facemodel.Height = facemodel.FaceImage.Height;
                                     facemodel.Width = facemodel.FaceImage.Width;
@@ -44,17 +54,13 @@ namespace PlantLifeAnimationForm
                                     facemodel.FramePosX = f.X;
                                     facemodel.FramePosY = f.Y;
                                     facemodel.ImageFrameSize = image.Size;
-                                    eyesRect = new List<Rectangle>(FindEyes(eyeFileName, clone));
-                                    if (eyesRect != null) {
-                                        facemodel.EyesRects = eyesRect;
-                                        facemodel.EyesCount = eyesRect.Count;
-                                    }
+
                                     Gray avgf = new Gray();
                                     MCvScalar avstd = new MCvScalar();
                                     clone.ToImage().AvgSdv(out avgf, out avstd);
                                     facemodel.StdDev = avstd.V0;
                                     faces.Add(facemodel);
-                                    if (facemodel.FaceScore>39)
+                                    if (facemodel.FaceScore > 39)
                                         Console.WriteLine("FaceDetect USING gpuCUDA Add faceModel" + facemodel.FaceScore);
 
                                     break;
@@ -74,7 +80,7 @@ namespace PlantLifeAnimationForm
 
         private Rectangle[] FindEyes(string eyeFileName, CudaImage<Gray, Byte> image)
         {
-            using (CudaCascadeClassifier eye = new CudaCascadeClassifier("haar_cuda\\haarcascade_eye.xml"))
+            using (CudaCascadeClassifier eye = new CudaCascadeClassifier(eyeFileName))
             using (GpuMat eyeRegionMat = new GpuMat())
             {
                 eye.DetectMultiScale(image, eyeRegionMat);

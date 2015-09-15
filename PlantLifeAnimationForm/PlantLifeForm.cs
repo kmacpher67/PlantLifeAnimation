@@ -22,6 +22,7 @@ namespace PlantLifeAnimationForm
 
         private bool captureInProgress;
         private FaceCapture faceCapture;
+        private bool HasCuda = true; 
 
         VideoMethod CurrentState = VideoMethod.Viewing; //default state
         public enum VideoMethod
@@ -31,10 +32,18 @@ namespace PlantLifeAnimationForm
         };
 
         #region faceparams
-        string faceTrainingFile, eyeTrainingFile;
+        string faceTrainingFile = "haar\\haarcascade_frontalface_default.xml";
+        string eyeTrainingFile = "haar\\haarcascade_eye.xml";
+        string faceTrainingFileCuda = "haar_cuda\\haarcascade_frontalface_default.xml";
+        string eyeTrainingFileCuda = "haar_cuda\\haarcascade_eye.xml";
         double FaceScale = 1.1;
         int FaceNieghbors = 5;
         int FaceMinSize = 20;
+        int FaceMaxSize = 200;
+        double EyeScale = 1.1;
+        int EyeNieghbors = 1;
+        int EyeMinSize = 4;
+        int EyeMaxSize = 64;
         #endregion
 
         public int lastFaceIndex = 0; 
@@ -59,14 +68,23 @@ namespace PlantLifeAnimationForm
 
             ConfigLoad();
 
+            FaceCapture.HasCuda = HasCuda;
 
+            if (HasCuda)
+            {
+                faceTrainingFile = faceTrainingFileCuda;
+                eyeTrainingFile = eyeTrainingFileCuda;
+                Console.WriteLine("HasCuda overwriten haar training files =" + HasCuda);
+            }
 
-            faceCapture = new FaceCapture(faceTrainingFile, eyeTrainingFile);
-            faceCapture.Scale = FaceScale;
-            faceCapture.Neighbors = FaceNieghbors;
-            faceCapture.FaceMinSize = FaceMinSize;
-            faceCapture.FaceCaptured += new FaceCapturedEventHandler(FaceCaptured);
-            faceCapture.ImageCaptured += faceCapture_ImageCaptured;
+            this.faceCapture = new FaceCapture(faceTrainingFile, eyeTrainingFile,FaceScale, FaceNieghbors, FaceMinSize);
+
+            this.faceCapture.Scale = FaceScale;
+            this.faceCapture.Neighbors = FaceNieghbors;
+            this.faceCapture.FaceMinSize = FaceMinSize;
+            this.faceCapture.FaceMaxSize = FaceMaxSize;
+            this.faceCapture.FaceCaptured += new FaceCapturedEventHandler(FaceCaptured);
+            this.faceCapture.ImageCaptured += faceCapture_ImageCaptured;
 
 
             // start off with default plant image: 
@@ -148,12 +166,21 @@ namespace PlantLifeAnimationForm
             Console.WriteLine(" plant life ConfigLoad");
             try
             {
+
                 faceTrainingFile = ConfigurationManager.AppSettings["faceTrainingFile"].ToString();
-                eyeTrainingFile = ConfigurationManager.AppSettings["eyeTrainingFile"].ToString(); 
+                eyeTrainingFile = ConfigurationManager.AppSettings["eyeTrainingFile"].ToString();
+                faceTrainingFileCuda = ConfigurationManager.AppSettings["faceTrainingFileCuda"].ToString();
+                eyeTrainingFileCuda = ConfigurationManager.AppSettings["eyeTrainingFileCuda"].ToString();
+
                 FaceScale = double.Parse(ConfigurationManager.AppSettings["FaceScale"].ToString());
                 FaceNieghbors = int.Parse(ConfigurationManager.AppSettings["FaceNieghbors"].ToString());
                 FaceMinSize = int.Parse(ConfigurationManager.AppSettings["FaceMinSize"].ToString());
+                HasCuda = Convert.ToBoolean(ConfigurationManager.AppSettings["HasCuda"] ?? "false");
+                FaceMaxSize = int.Parse(ConfigurationManager.AppSettings["FaceMaxSize"].ToString());
 
+                EyeScale = double.Parse(ConfigurationManager.AppSettings["EyeScale"].ToString());
+                EyeNieghbors = int.Parse(ConfigurationManager.AppSettings["EyeNieghbors"].ToString());
+                EyeMinSize = int.Parse(ConfigurationManager.AppSettings["EyeMinSize"].ToString());
             }
             catch (Exception parseERR)
             {
