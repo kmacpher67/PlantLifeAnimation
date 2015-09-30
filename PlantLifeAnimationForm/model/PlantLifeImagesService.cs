@@ -201,7 +201,7 @@ namespace PlantLifeAnimationForm
         /// <param name="targetDir"></param>
         public void loadImages(string targetDir = "images")
         {
-            Console.WriteLine("plant life loadImages");
+            Console.WriteLine("plant life loadImages targetDir="+targetDir);
             string[] files = Directory.GetFiles(targetDir, "*");
             foreach (var f in files)
             {
