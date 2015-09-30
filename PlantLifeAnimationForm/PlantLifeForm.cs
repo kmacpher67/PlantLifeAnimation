@@ -130,17 +130,18 @@ namespace PlantLifeAnimationForm
                     Rectangle rectFace = currentFace.FaceRect;
                     currentFrame.Draw(rectFace, drawBoxColor, 3);
 
-                    String displayFaceData = "F#=" + faceCapture.Faces.Count + " Rx,y=" + rectFace.X + "," + rectFace.Y ;
-                    displayFaceData = displayFaceData + " P=" + currentFace.FramePosX + " W=" + currentFace.Width + " Mo=" + currentFace.MotionPixels;
-                    //Version 3.0 does it differently than version 2.0
-                    //Draw "Hello, world." on the image using the specific font
-                    CvInvoke.PutText(
+                        String displayFaceData = " W=" + currentFace.Width + " Mo=" + currentFace.MotionPixels;
+                        //"F#=" + faceCapture.Faces.Count + " Rx,y=" + rectFace.X + "," + rectFace.Y ;
+                        //displayFaceData = displayFaceData + " P=" + currentFace.FramePosX + " W=" + currentFace.Width + " Mo=" + currentFace.MotionPixels;
+                        //Version 3.0 does it differently than version 2.0
+                        //Draw "Hello, world." on the image using the specific font
+                        CvInvoke.PutText(
                        currentFrame,
                        displayFaceData,
-                       new System.Drawing.Point(1, 15),
+                       new System.Drawing.Point(1, 60),
                        FontFace.HersheyComplex,
-                       rs / 2,
-                       new Bgr(0, 255, 0).MCvScalar);
+                       rs / 8,
+                       new Bgr(0, 0, 255).MCvScalar);
                     peoplePicture.Image = currentFrame.Resize(rs, Inter.Cubic).ToBitmap();
                     // only update plant image if the face is any good. 
                     updatePlantImage();
