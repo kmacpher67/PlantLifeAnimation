@@ -49,7 +49,7 @@ namespace PlantLifeAnimationForm
         public int lastFaceIndex = 0; 
 
         public int reloadDirIndex = 0;
-        public string[] reloaddir = {"images/Matrix","images/Dog","images/DeadFish", "images/horses", "images/Pond", "images/Fireworks"};
+        public string[] reloaddir = {"images/zone1","images/zone2","images/zone3", "images/Matrix", "images/Pond", "images/Fireworks"};
 
         public int reloadDirIndexOver = 0;
         public string[] reloaddirOver = { "images/butterfly" };
