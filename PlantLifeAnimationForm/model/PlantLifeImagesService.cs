@@ -6,9 +6,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-
-
+using System.Threading;
 
 namespace PlantLifeAnimationForm
 {
@@ -27,7 +25,9 @@ namespace PlantLifeAnimationForm
         public PlantLifeImagesService()
         {
             Bitmap bmONE =  getImageFromFile("images/butterfly/animated-butterfly-image-0005.gif");
-            loadImages("images/complex");
+
+            loadMovie(); // load background complex as .mov frame by frame. 
+            //loadImages("images/complex");
             loadOverlayImages(); // use default butterfly
         }
 
@@ -192,6 +192,20 @@ namespace PlantLifeAnimationForm
             if (plantLifeImages == null || plantLifeImages.Count == 0)
             {
                 plantLifeImages = plantLifeImagesOld;
+            }
+        }
+
+        public void loadMovie(string movelocation = "images\\zone2\\0247 Painting photo JPEG.mov")
+        {
+            ProcessImageSequences processImageSeq = new ProcessImageSequences();
+            processImageSeq.StartCapture();
+            Thread.Sleep(50);
+
+            for (int x=0; x<=processImageSeq.paintingJPEGMovIndex ; x++)
+            {
+                PlantLifeImage plantLifeImage = new PlantLifeImage();
+                plantLifeImage.PlantImage = processImageSeq.paintingJPEGMov[x].ToBitmap();
+                plantLifeImages.Add(plantLifeImage);
             }
         }
 
