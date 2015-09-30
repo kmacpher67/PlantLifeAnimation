@@ -51,16 +51,26 @@ namespace PlantLifeAnimationForm
         private void ProcessFrame(object sender, EventArgs arg)
         {
             Debug.WriteLine(" ProcessFrame=" + paintingJPEGMovIndex);
-            try {
-                paintingJPEGMov[paintingJPEGMovIndex++] = capture.QueryFrame().ToImage<Bgr, Byte>();
-            }
-            catch(Exception exp)
-            {
-                StopCapture();
-            }
+            processMovIntoImageArray();
 
         }
 
+        public void processMovIntoImageArray()
+        {
+            Debug.WriteLine(" processMovIntoImageArray=" + paintingJPEGMovIndex);
+            try
+            {
+                while (true)
+                {
+                    paintingJPEGMov[paintingJPEGMovIndex++] = capture.QueryFrame().ToImage<Bgr, Byte>();
+                }
+
+            }
+            catch (Exception exp)
+            {
+                StopCapture();
+            }
+        }
 
     }
 }
