@@ -199,11 +199,14 @@ namespace PlantLifeAnimationForm
         {
             ProcessImageSequences processImageSeq = new ProcessImageSequences();
             processImageSeq.StartCapture();
-            Thread.Sleep(50);
+            processImageSeq.processMovIntoImageArray();
 
-            for (int x=0; x<=processImageSeq.paintingJPEGMovIndex ; x++)
+
+            for (int x=0; x<processImageSeq.paintingJPEGMov.Count ; x++)
             {
                 PlantLifeImage plantLifeImage = new PlantLifeImage();
+                if (processImageSeq.paintingJPEGMov == null)
+                    break;
                 plantLifeImage.PlantImage = processImageSeq.paintingJPEGMov[x].ToBitmap();
                 plantLifeImages.Add(plantLifeImage);
             }

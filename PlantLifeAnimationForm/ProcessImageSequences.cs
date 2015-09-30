@@ -9,6 +9,7 @@ using Emgu.CV.Cuda;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace PlantLifeAnimationForm
 {
@@ -19,12 +20,14 @@ namespace PlantLifeAnimationForm
 
         public string imageContentDir { get; set; }
         public Stopwatch timeInterval = new Stopwatch();
-        public Image<Bgr, Byte>[] paintingJPEGMov;
+        public List<Image<Bgr, byte>> paintingJPEGMov = new List<Image<Bgr, byte>>();
         public int paintingJPEGMovIndex = 0;
 
         public ProcessImageSequences()
         {
             imageContentDir = "images\\zone2\\0247 Painting photo JPEG.mov";
+            capture = new Capture(imageContentDir);
+            Debug.WriteLine("starting ProcessImageSequences capture =  " + capture.ToString());
         }
 
         public void StartCapture()
@@ -62,7 +65,11 @@ namespace PlantLifeAnimationForm
             {
                 while (true)
                 {
-                    paintingJPEGMov[paintingJPEGMovIndex++] = capture.QueryFrame().ToImage<Bgr, Byte>();
+                    Mat mat = capture.QueryFrame();
+                    Image<Bgr, Byte> ImageFrame = mat.ToImage<Bgr, Byte>();
+                    paintingJPEGMov.Add(ImageFrame);
+                    paintingJPEGMovIndex++;
+                    Thread.Sleep(15);
                 }
 
             }
