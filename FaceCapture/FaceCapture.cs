@@ -36,7 +36,7 @@ namespace PlantLifeAnimationForm
         public int EyeFaceMinSize { get; set; }
         public int EyeFaceMaxSize { get; set; }
 
-        public int reductionWidth = 320;
+        public int reductionWidth = 640;
         public double reductionRatio = 1; // assumes input source is 320x200;  1/2 640/400
 
         public double motionHistoryDuration = 1.0;
