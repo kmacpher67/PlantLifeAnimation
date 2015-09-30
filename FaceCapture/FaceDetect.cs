@@ -15,6 +15,8 @@ namespace PlantLifeAnimationForm
         public int eyeneighbors = 0;
         public int eyeminsize = 2;
         public int eyemaxsize = 100;
+        public bool useOcl = true; 
+
         public List<Face> FindFaces(Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> image, string faceFileName, string eyeFileName, double scale, int neighbors, int minSize)
         {
            
@@ -23,7 +25,7 @@ namespace PlantLifeAnimationForm
             List<Rectangle> eyesRect = new List<Rectangle>();
             try
             {
-                using (CascadeClassifier face = new CascadeClassifier(faceFileName))
+                using (CascadeClassifier face = createClassifier(faceFileName))
                 {
                     using (Image<Gray, Byte> gray = image.Convert<Gray, Byte>())
                     {
@@ -78,9 +80,15 @@ namespace PlantLifeAnimationForm
             return faces;
         }
 
+        private CascadeClassifier createClassifier(String ccfilename)
+        {
+
+            return new CascadeClassifier(ccfilename);
+        }
+
         public Rectangle[] FindEyes(string eyeFileName, Image<Gray, Byte> imageFace)
         {
-            using (CascadeClassifier eye = new CascadeClassifier(eyeFileName))
+            using (CascadeClassifier eye = createClassifier(eyeFileName))
             using (Mat eyeRegionMat = new Mat())
             {
                 Rectangle[] eyeRegion = eye.DetectMultiScale(imageFace, eyescale, eyeneighbors, new Size(eyeminsize, eyeminsize), new Size(eyemaxsize, eyemaxsize));
