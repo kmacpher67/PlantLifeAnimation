@@ -233,10 +233,7 @@ namespace PlantLifeAnimationForm
 
             //  array of motion info MotionInfo motion =
             motions.Add(this.GetMotionInfo(mat));
-            if (motions.Count > 100)
-            {
-                motions.RemoveRange(0, 10);
-            }
+
             bool changed = calculateMotion();
             // only calc face stuff if changes are big. 
             if (Faces.Count < 1 || changed)
@@ -258,6 +255,10 @@ namespace PlantLifeAnimationForm
                     }
                     Faces.Add(face);
                 }
+            }
+            if (motions.Count > 100)
+            {
+                motions.RemoveRange(0, 10);
             }
         }
 

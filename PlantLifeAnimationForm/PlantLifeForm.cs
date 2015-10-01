@@ -46,7 +46,8 @@ namespace PlantLifeAnimationForm
         int EyeMaxSize = 64;
         #endregion
 
-        public int lastFaceIndex = 0; 
+        public int lastFaceIndex = 0;
+        public int lastFaceCount = 0;
 
         public int reloadDirIndex = 0;
         public string[] reloaddir = {"images/zone1","images/zone2","images/main", "images/Matrix", "images/complex", "images/Pond", "images/Fireworks"};
@@ -115,7 +116,10 @@ namespace PlantLifeAnimationForm
 
         void faceCapture_ImageCaptured(object sender)
         {
-            if (faceCapture.ImageFrameLast != null && faceCapture.ImageFrameLast.Width != 0)
+            // only update plant image if the face is any good. 
+            updatePlantImage();
+
+            if (faceCapture.ImageFrameLast != null && faceCapture.ImageFrameLast.Width != 0 && faceCapture.Faces != null && lastFaceCount!= faceCapture.Faces.Count)
             {                
             using (Image<Bgr, byte> currentFrame = faceCapture.ImageFrameLast.Resize(faceCapture.reductionRatio,Inter.Cubic) )
             {
@@ -140,8 +144,8 @@ namespace PlantLifeAnimationForm
                        displayFaceData,
                        new System.Drawing.Point(1, 60),
                        FontFace.HersheyComplex,
-                       rs * 8,
-                       new Bgr(0, 0, 255).MCvScalar);
+                       rs * 4,
+                       new Bgr(0, 0, 255).MCvScalar,6);
                     peoplePicture.Image = currentFrame.Resize(rs, Inter.Cubic).ToBitmap();
 
                 }
