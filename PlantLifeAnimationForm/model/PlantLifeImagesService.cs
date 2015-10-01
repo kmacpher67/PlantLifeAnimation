@@ -31,7 +31,7 @@ namespace PlantLifeAnimationForm
             pli.PlantImage = getImageFromFile("images\\butterfly3\\butterflies6.gif");
             plantLifeImagesOver.Add(pli);
 
-            loadMovie(); // load background complex as .mov frame by frame. 
+            loadMovie("images/zone3/z2brightcolors10fr25.mov"); // load background complex as .mov frame by frame. 
             //loadImages("images/complex");
             loadOverlayImages(); // use default butterfly
         }
