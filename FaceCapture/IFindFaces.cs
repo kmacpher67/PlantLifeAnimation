@@ -11,5 +11,7 @@ namespace PlantLifeAnimationForm
     interface IFindFaces
     {
         List<Face> FindFaces(Image<Bgr, Byte> image, String faceFileName, string eyeFileName, double scale, int neighbors, int minSize);
+
+        Task<List<Face>> FindFacesAsync(Image<Bgr, Byte> image, String faceFileName, string eyeFileName, double scale, int neighbors, int minSize);
     }
 }

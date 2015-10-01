@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Diagnostics;
+using System.Threading;
 
 namespace PlantLifeAnimationForm
 {
@@ -69,10 +70,13 @@ namespace PlantLifeAnimationForm
         public Stopwatch timerfaces = new Stopwatch();
         public Stopwatch timerlastfacecapture = new Stopwatch();
 
+        public bool faceProcessing = false;
+
         /// <summary>
         /// Motion change threshold, indicator to check for a new face 
         /// </summary>
-        public double MotionThreshold = 0.9; 
+        public double MotionThreshold = 0.9
+            ; 
 
 
         public FaceCapture(string faceTrainingFile, string eyeTrainingFile)
@@ -191,6 +195,46 @@ namespace PlantLifeAnimationForm
             if (motions.Count > 100)
                 motions.RemoveRange(0, 10);
         }
+        /// <summary>
+        /// async await face checking in background thread 
+        /// </summary>
+        /// <returns></returns>
+        public async void checkFace(Image<Bgr, Byte> ImageFrame)
+        {
+            faceProcessing = true;
+            timerfaces.Restart();
+
+            //        var t = Task.Factory.StartNew(async delegate {
+            //            await Task.Delay(1000);
+            //            return FaceDetector.FindFaces(ImageFrame.Resize(reductionRatio, Inter.Cubic), FaceTrainingFile, EyeTrainingFile, Scale, Neighbors, FaceMinSize); },
+            //CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default);
+            //Task< List < Face >> FoundFacesTask = await Task.Factory.StartNew(() =>
+            //{
+            //    var x = FaceDetector.FindFacesAsync(ImageFrame.Resize(reductionRatio, Inter.Cubic), FaceTrainingFile, EyeTrainingFile, Scale, Neighbors, FaceMinSize);
+            //});
+            //Task taskslow = new Task<List<Face>>(() => FaceDetector.FindFaces(ImageFrame.Resize(reductionRatio, Inter.Cubic), FaceTrainingFile, EyeTrainingFile, Scale, Neighbors, FaceMinSize));
+            //taskslow.Start();
+
+            List<Face> FoundFaces = await Task.Run(() => FaceDetector.FindFaces(ImageFrame.Resize(reductionRatio, Inter.Cubic), FaceTrainingFile, EyeTrainingFile, Scale, Neighbors, FaceMinSize));
+
+            timerfaces.Stop();
+            Debug.WriteLine(timerfaces.Elapsed);
+            foreach (Face face in FoundFaces)
+            {
+                face.MotionObjects = motions.Last().MotionObjects;
+                face.MotionPixels = motions.Last().MotionPixels;
+                motionPixelsAvg = motionPixelsAvg * motionPixelsSmooth + motions.Last().MotionPixels * (1 - motionPixelsSmooth);
+                face.MotionPixelsAvg = motionPixelsAvg;
+
+                if (FaceCaptured != null)
+                {
+                    FaceCaptured(this, face);
+                }
+                Faces.Add(face);
+            }
+            timerlastfacecapture.Restart();
+            faceProcessing = false;
+        }
 
         void processNewFaceImages(Mat mat, Image<Bgr, Byte> ImageFrame)
         {
@@ -204,25 +248,11 @@ namespace PlantLifeAnimationForm
             if (Faces.Count < 1 || changed || timerlastfacecapture.ElapsedMilliseconds>6000)
             {
                 reductionRatio = (double)reductionWidth / (double)ImageFrame.Width;
-
-                timerfaces.Restart();
-                List<Face> FoundFaces = FaceDetector.FindFaces(ImageFrame.Resize(reductionRatio, Inter.Cubic), this.FaceTrainingFile, this.EyeTrainingFile, this.Scale, this.Neighbors, this.FaceMinSize);
-                timerfaces.Stop();
-
-                foreach (Face face in FoundFaces)
+                if (!faceProcessing)
                 {
-                    face.MotionObjects = motions.Last().MotionObjects;
-                    face.MotionPixels = motions.Last().MotionPixels;
-                    motionPixelsAvg = motionPixelsAvg * motionPixelsSmooth + motions.Last().MotionPixels * (1 - motionPixelsSmooth);
-                    face.MotionPixelsAvg = motionPixelsAvg;
-
-                    if (FaceCaptured != null)
-                    {
-                        FaceCaptured(this, face);
-                    }
-                    Faces.Add(face);
+                    faceProcessing = true;
+                    checkFace(ImageFrame);
                 }
-                timerlastfacecapture.Restart();
             }
 
         }

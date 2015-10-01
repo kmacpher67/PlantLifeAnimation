@@ -15,7 +15,16 @@ namespace PlantLifeAnimationForm
         public int eyeneighbors = 0;
         public int eyeminsize = 2;
         public int eyemaxsize = 100;
-        public bool useOcl = true; 
+        public bool useOcl = true;
+
+        public Task<List<Face>> FindFacesAsync(Image<Bgr, Byte> image, String faceFileName, string eyeFileName, double scale, int neighbors, int minSize)
+        {
+            return Task.Factory.StartNew(() =>
+                {
+                    return FindFaces(image,faceFileName, eyeFileName, scale, neighbors, minSize) ;
+                });
+        }
+
 
         public List<Face> FindFaces(Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> image, string faceFileName, string eyeFileName, double scale, int neighbors, int minSize)
         {

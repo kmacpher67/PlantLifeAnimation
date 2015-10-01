@@ -12,6 +12,13 @@ namespace PlantLifeAnimationForm
 {
     class FaceDetectCuda : IFindFaces
     {
+        public Task<List<Face>> FindFacesAsync(Image<Bgr, Byte> image, String faceFileName, string eyeFileName, double scale, int neighbors, int minSize)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                return FindFaces(image, faceFileName, eyeFileName, scale, neighbors, minSize);
+            });
+        }
         public List<Face> FindFaces(Image<Bgr, byte> image, string faceFileName, string eyeFileName, double scale, int neighbors, int minSize)
         {
             List<Face> faces = new List<Face>();

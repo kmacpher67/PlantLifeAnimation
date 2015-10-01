@@ -35,8 +35,8 @@ namespace PlantLifeAnimationForm
             plantLifeImagesOver.Add(pli);
 
             //loadMovie("images/zone3/z2brightcolors10fr25.mov"); // load background complex as .mov frame by frame. 
-            loadMovie("z2 bright colors.mov");
-            //loadImages("images/complex");
+            //loadMovie("z2 bright colors.mov");
+            loadImages("images/welcome");
             loadOverlayImages(); // use default butterfly
             ZoneDef df1 = new ZoneDef();
             df1.Id = 0;
@@ -62,53 +62,54 @@ namespace PlantLifeAnimationForm
         public Bitmap handleFacedScoredInput(List<Face> faces, int imageSeq = 0)
         {
             Bitmap bm = plantLifeImages[imageSeq].PlantImage;
-            //if (faces != null )
-            //{
+            if (faces != null)
+            {
 
-            //    FaceScoring fsc = new FaceScoring();
-            //    //FaceScored faceclosest = fsc.getClosest(faces);
-            //    //FaceScored facefurthest = fsc.getFurthest(faces);
-            //    if (faces.Count>=1)
-            //    {
-                    
-            //        //  bm = plantLifeImages.Find(x => x.numberOfPeople == faces.Count).PlantImage;
-            //        try {
-            //            int faceWidth = faces[faces.Count-1].Width;
-            //            int plantlifeindex = (int)(1.0 * faceWidth / FaceScoring.FaceSizeMax * plantLifeImages.Count);
-            //            plantlifeindex = (plantlifeindex >= plantLifeImages.Count) ? plantLifeImages.Count - 1 : plantlifeindex;
-            //            bm = plantLifeImages[plantlifeindex].PlantImage;
+                FaceScoring fsc = new FaceScoring();
+                //FaceScored faceclosest = fsc.getClosest(faces);
+                //FaceScored facefurthest = fsc.getFurthest(faces);
+                if (faces.Count >= 1)
+                {
 
-            //                if (faces.Count%5==0)
-            //                    Console.WriteLine(" -- plantlifeindex=" + plantlifeindex + " framePosX=" + faces[faces.Count - 1].FramePosX);
-            //                // TODO stubbed out overlay image onto another image trickery
-            //                int screenXpos = bm.Size.Width* faces[faces.Count - 1].FramePosX / frameSize.Width;
-            //                int screenYpos = bm.Size.Height * faces[faces.Count - 1].FramePosY / frameSize.Height;
+                    //  bm = plantLifeImages.Find(x => x.numberOfPeople == faces.Count).PlantImage;
+                    try
+                    {
+                        int faceWidth = faces[faces.Count - 1].Width;
+                        int plantlifeindex = (int)(1.0 * faceWidth / FaceScoring.FaceSizeMax * plantLifeImages.Count);
+                        plantlifeindex = (plantlifeindex >= plantLifeImages.Count) ? plantLifeImages.Count - 1 : plantlifeindex;
+                        bm = plantLifeImages[plantlifeindex].PlantImage;
 
-            //                //If motion is moving around then put a fadded butterfly on there. 
-            //                if(faces[faces.Count - 1].MotionPixelsAvg < thresholdMotionValue)
-            //                {
-            //                    int oindex = findOverlayIndexByName(rapidMotionOverlay);
-            //                    bm = appplyOverlayImage(bm, oindex, screenXpos, screenYpos, true);
-            //                }
-            //                else
-            //                {
-            //                    bm = appplyOverlayImage(bm, findOverlayIndexByFaceData(faces[faces.Count - 1]), screenXpos, screenYpos);
-            //                }
-            //                double deviation = (faces[faces.Count - 1].MotionPixelsAvg / thresholdMotionValue);
-            //                if (deviation > 5 || deviation<0.2)
-            //                {
-            //                    thresholdMotionValue = faces[faces.Count - 1].MotionPixelsAvg;
-            //                }
+                        if (faces.Count % 5 == 0)
+                            Console.WriteLine(" -- plantlifeindex=" + plantlifeindex + " framePosX=" + faces[faces.Count - 1].FramePosX);
+                        // TODO stubbed out overlay image onto another image trickery
+                        int screenXpos = bm.Size.Width * faces[faces.Count - 1].FramePosX / frameSize.Width;
+                        int screenYpos = bm.Size.Height * faces[faces.Count - 1].FramePosY / frameSize.Height;
 
-            //        }
-            //        catch (Exception errint)
-            //        {
-            //            Console.WriteLine("ERROR - handleFacedScoredInput =" + errint);
-            //        }
-            //    }
-            //}
+                        //If motion is moving around then put a fadded butterfly on there. 
+                        if (faces[faces.Count - 1].MotionPixelsAvg < thresholdMotionValue)
+                        {
+                            int oindex = findOverlayIndexByName(rapidMotionOverlay);
+                            bm = appplyOverlayImage(bm, oindex, screenXpos, screenYpos, true);
+                        }
+                        else
+                        {
+                            bm = appplyOverlayImage(bm, findOverlayIndexByFaceData(faces[faces.Count - 1]), screenXpos, screenYpos);
+                        }
+                        double deviation = (faces[faces.Count - 1].MotionPixelsAvg / thresholdMotionValue);
+                        if (deviation > 5 || deviation < 0.2)
+                        {
+                            thresholdMotionValue = faces[faces.Count - 1].MotionPixelsAvg;
+                        }
 
-           return bm;        
+                    }
+                    catch (Exception errint)
+                    {
+                        Console.WriteLine("ERROR - handleFacedScoredInput =" + errint);
+                    }
+                }
+            }
+
+            return bm;        
         }
 
         public int findOverlayIndexByFaceData(Face faceTarget)
