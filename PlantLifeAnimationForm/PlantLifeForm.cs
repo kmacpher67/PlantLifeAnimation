@@ -37,8 +37,8 @@ namespace PlantLifeAnimationForm
         string faceTrainingFileCuda = "haar_cuda\\haarcascade_frontalface_default.xml";
         string eyeTrainingFileCuda = "haar_cuda\\haarcascade_eye.xml";
         double FaceScale = 1.15;
-        int FaceNieghbors = 3;
-        int FaceMinSize = 10;
+        int FaceNieghbors = 4;
+        int FaceMinSize = 12;
         int FaceMaxSize = 200;
         double EyeScale = 1.15;
         int EyeNieghbors = 1;
@@ -116,8 +116,6 @@ namespace PlantLifeAnimationForm
 
         void faceCapture_ImageCaptured(object sender)
         {
-            // only update plant image if the face is any good. 
-            updatePlantImage();
 
             if (faceCapture.ImageFrameLast != null && faceCapture.ImageFrameLast.Width != 0 && faceCapture.Faces != null && lastFaceCount!= faceCapture.Faces.Count)
             {                
@@ -156,6 +154,8 @@ namespace PlantLifeAnimationForm
             }
             }
 
+            // update plant image every time this is a change, check in this method if the face changed
+            updatePlantImage();
         }
 
         /// <summary>

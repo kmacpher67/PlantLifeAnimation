@@ -26,5 +26,7 @@ namespace PlantLifeAnimationForm
         public Image<Bgr, Byte> MotionImage { get; set; }
 
         public Rectangle[] BoundingRect { get; set; }
+
+        public double SmoothedAvg { get; set; }
     }
 }

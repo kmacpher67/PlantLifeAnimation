@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace PlantLifeAnimationForm
 {
@@ -64,8 +65,18 @@ namespace PlantLifeAnimationForm
         public event FaceCapturedEventHandler FaceCaptured;
         public event ImageCapturedEventHandler ImageCaptured;
 
+        public Stopwatch timermotion = new Stopwatch();
+        public Stopwatch timerfaces = new Stopwatch();
+        public Stopwatch timerlastfacecapture = new Stopwatch();
+
+        /// <summary>
+        /// Motion change threshold, indicator to check for a new face 
+        /// </summary>
+        public double MotionThreshold = 0.9; 
+
+
         public FaceCapture(string faceTrainingFile, string eyeTrainingFile)
-            : this(faceTrainingFile, eyeTrainingFile, 1.1, 8, 10)
+            : this(faceTrainingFile, eyeTrainingFile, 1.12, 8, 12)
         {
 
         }
@@ -132,48 +143,6 @@ namespace PlantLifeAnimationForm
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="numFaces"></param>
-        /// <param name="minScore"></param>
-        /// <returns></returns>
-        public List<Face> GetFaces(int numFaces, int minScore)
-        {
-            int frameCount = 0;
-            capture = new Capture();
-            _motionHistory = new MotionHistory(1.0, 0.05, 0.5);
-            List<Face> foundfaces = new List<Face>();
-
-            while (foundfaces.Count() < numFaces)
-            {
-                Mat mat = capture.QueryFrame();
-                Image<Bgr, Byte> ImageFrame = mat.ToImage<Bgr, Byte>();
-                captureScreenSize = mat.Size;
-
-                frameCount = frameCount + 1;
-                MotionInfo motion = this.GetMotionInfo(mat);
-                List<Face> detectedFaces = FaceDetector.FindFaces(ImageFrame, this.FaceTrainingFile, this.EyeTrainingFile, this.Scale, this.Neighbors, this.FaceMinSize);
-
-                if (frameCount > 2)
-                {
-                    foreach (Face face in detectedFaces)
-                    {
-                        face.MotionObjects = motion.MotionObjects;
-                        face.MotionPixels = motion.MotionPixels;
-
-                        if (face.FaceScore > minScore)
-                        {
-                            foundfaces.Add(face);
-                        }
-                    }
-                }
-            }
-
-            capture.Dispose();
-            capture = null;
-            return foundfaces;
-        }
 
         /// <summary>
         /// first best face score
@@ -209,8 +178,8 @@ namespace PlantLifeAnimationForm
                 return;
             }
             Image<Bgr, Byte> ImageFrame = mat.ToImage<Bgr, Byte>();
-            if ((frameCount++)%27==0)
-                Console.WriteLine("FaceCapture ProcessFrame start frameCount=" + frameCount + " datetime" + DateTime.Now);
+            if ((frameCount++)%10==0)
+                Console.WriteLine("FC ProcessFrame fc=" + frameCount + " dt=" + DateTime.Now + " tmo="+timermotion.Elapsed + " tface=" + timerfaces.Elapsed);
 
             this.processNewFaceImages(mat, ImageFrame);
             if (ImageCaptured != null)
@@ -225,16 +194,20 @@ namespace PlantLifeAnimationForm
 
         void processNewFaceImages(Mat mat, Image<Bgr, Byte> ImageFrame)
         {
+            timermotion.Restart();
             //  array of motion info MotionInfo motion =
             motions.Add(this.GetMotionInfo(mat));
+            timermotion.Stop();
 
             bool changed = calculateMotion();
             // only calc face stuff if changes are big. 
-            if (Faces.Count < 1 || changed)
+            if (Faces.Count < 1 || changed || timerlastfacecapture.ElapsedMilliseconds>6000)
             {
                 reductionRatio = (double)reductionWidth / (double)ImageFrame.Width;
 
+                timerfaces.Restart();
                 List<Face> FoundFaces = FaceDetector.FindFaces(ImageFrame.Resize(reductionRatio, Inter.Cubic), this.FaceTrainingFile, this.EyeTrainingFile, this.Scale, this.Neighbors, this.FaceMinSize);
+                timerfaces.Stop();
 
                 foreach (Face face in FoundFaces)
                 {
@@ -249,22 +222,34 @@ namespace PlantLifeAnimationForm
                     }
                     Faces.Add(face);
                 }
+                timerlastfacecapture.Restart();
             }
 
         }
 
-        private bool calculateMotion()
+        private bool calculateMotion(MotionInfo curMotion = null)
         {
             bool isKewl = true;
+
+            if (motions.Count < 2)
+                return false;
+
+            if (curMotion==null)
+                 curMotion = motions.Last();
+
             if (motions.Count < 2)
                 return false; 
 
             MotionInfo motionCur = motions.Last();
 
             if (motionCur.BoundingRect.Count() < 1)
-                return false; 
+                return false;
 
-            return isKewl;
+            double normalizedMo = Math.Abs(curMotion.SmoothedAvg - curMotion.MotionPixels) / curMotion.MotionPixels;
+            if (normalizedMo > MotionThreshold)
+                isKewl = true;
+
+                return isKewl;
         }
 
         private MotionInfo GetMotionInfo(Mat image)
@@ -353,9 +338,11 @@ namespace PlantLifeAnimationForm
             motionInfoObj.MotionObjects = objectCount;
             motionInfoObj.MotionPixels = overallMotionPixelCount;
             averagetotalPixelCount = 0.75 * averagetotalPixelCount + 0.25 * overallMotionPixelCount;
-            if ( Math.Abs(averagetotalPixelCount - totalPixelCount) / averagetotalPixelCount > 0.69)
-                Console.WriteLine(" GetMotionInfo - Total Motions found: " + rects.Length + "; Motion Pixel count: " + totalPixelCount);
             motionInfoObj.SmoothedAvg = averagetotalPixelCount;
+
+            if (this.calculateMotion(motionInfoObj))
+                Console.WriteLine(" GetMotionInfo Total Motions=" + rects.Length + "; Pixel count=" + overallMotionPixelCount+"; ang=" + overallAngle);
+
             return motionInfoObj;
         }
     }
