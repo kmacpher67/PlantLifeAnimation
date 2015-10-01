@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using plantlifeanim4.model;
 
 namespace PlantLifeAnimationForm
 {
@@ -19,6 +20,7 @@ namespace PlantLifeAnimationForm
         public List<Int16> currentOverlayFrames = new List<Int16>();
         public Size frameSize = new Size(640, 480);
 
+        public List<ZoneDef> zoneDefs = new List<ZoneDef>();
         public double thresholdMotionValue = 9999;
         public string rapidMotionOverlay = "images/butterfly\\animated-butterfly-image-0005.gif"; 
 
@@ -28,6 +30,7 @@ namespace PlantLifeAnimationForm
             PlantLifeImage pli = new PlantLifeImage();
             //pli.PlantImage = getImageFromFile("images\\zone2\\sh-57sec-slow.gif");
             //pli.PlantImage = getImageFromFile("images\\fade\\sh-trans-colorized.gif");
+            // default value
             pli.PlantImage = getImageFromFile("images\\butterfly3\\butterflies6.gif");
             plantLifeImagesOver.Add(pli);
 
@@ -35,56 +38,75 @@ namespace PlantLifeAnimationForm
             loadMovie("z2 bright colors.mov");
             //loadImages("images/complex");
             loadOverlayImages(); // use default butterfly
+            ZoneDef df1 = new ZoneDef();
+            df1.Id = 0;
+            df1.ZoneName = "welcome";
+            df1.FrameSize = new Size(320, 210);
+            df1.ImageDir = "images/welcome";
+            df1.DistanceAway = 168;
+
+            setupZoneDefs(df1);
         }
 
-        public Bitmap handleFacedScoredInput(List<Face> faces)
+        /// <summary>
+        ///  add zonedefs to this
+        /// </summary>
+        /// <param name="addZoneDef"></param>
+        /// <returns>count of list</returns>
+        public int setupZoneDefs(ZoneDef addZoneDef)
         {
-            Bitmap bm = plantLifeImages.FirstOrDefault<PlantLifeImage>().PlantImage;
-            if (faces != null)
-            {
+            zoneDefs.Add(addZoneDef);
+            return zoneDefs.Count;
+        }
 
-                FaceScoring fsc = new FaceScoring();
-                //FaceScored faceclosest = fsc.getClosest(faces);
-                //FaceScored facefurthest = fsc.getFurthest(faces);
-                if (faces.Count>=1)
-                {
+        public Bitmap handleFacedScoredInput(List<Face> faces, int imageSeq = 0)
+        {
+            Bitmap bm = plantLifeImages[imageSeq].PlantImage;
+            //if (faces != null )
+            //{
+
+            //    FaceScoring fsc = new FaceScoring();
+            //    //FaceScored faceclosest = fsc.getClosest(faces);
+            //    //FaceScored facefurthest = fsc.getFurthest(faces);
+            //    if (faces.Count>=1)
+            //    {
                     
-                    //  bm = plantLifeImages.Find(x => x.numberOfPeople == faces.Count).PlantImage;
-                    try {
-                        int faceWidth = faces[faces.Count-1].Width;
-                        int plantlifeindex = (int)(1.0 * faceWidth / FaceScoring.FaceSizeMax * plantLifeImages.Count);
-                        plantlifeindex = (plantlifeindex >= plantLifeImages.Count) ? plantLifeImages.Count - 1 : plantlifeindex;
-                        bm = plantLifeImages[plantlifeindex].PlantImage;
+            //        //  bm = plantLifeImages.Find(x => x.numberOfPeople == faces.Count).PlantImage;
+            //        try {
+            //            int faceWidth = faces[faces.Count-1].Width;
+            //            int plantlifeindex = (int)(1.0 * faceWidth / FaceScoring.FaceSizeMax * plantLifeImages.Count);
+            //            plantlifeindex = (plantlifeindex >= plantLifeImages.Count) ? plantLifeImages.Count - 1 : plantlifeindex;
+            //            bm = plantLifeImages[plantlifeindex].PlantImage;
 
-                            if (faces.Count%5==0)
-                                Console.WriteLine(" -- plantlifeindex=" + plantlifeindex + " framePosX=" + faces[faces.Count - 1].FramePosX);
-                            // TODO stubbed out overlay image onto another image trickery
-                            int screenXpos = bm.Size.Width* faces[faces.Count - 1].FramePosX / frameSize.Width;
-                            int screenYpos = bm.Size.Height * faces[faces.Count - 1].FramePosY / frameSize.Height;
+            //                if (faces.Count%5==0)
+            //                    Console.WriteLine(" -- plantlifeindex=" + plantlifeindex + " framePosX=" + faces[faces.Count - 1].FramePosX);
+            //                // TODO stubbed out overlay image onto another image trickery
+            //                int screenXpos = bm.Size.Width* faces[faces.Count - 1].FramePosX / frameSize.Width;
+            //                int screenYpos = bm.Size.Height * faces[faces.Count - 1].FramePosY / frameSize.Height;
 
-                            //If motion is moving around then put a fadded butterfly on there. 
-                            if(faces[faces.Count - 1].MotionPixelsAvg < thresholdMotionValue)
-                            {
-                                int oindex = findOverlayIndexByName(rapidMotionOverlay);
-                                bm = appplyOverlayImage(bm, oindex, screenXpos, screenYpos, true);
-                            }
-                            else
-                            {
-                                bm = appplyOverlayImage(bm, findOverlayIndexByFaceData(faces[faces.Count - 1]), screenXpos, screenYpos);
-                            }
-                            double deviation = (faces[faces.Count - 1].MotionPixelsAvg / thresholdMotionValue);
-                            if (deviation > 5 || deviation<0.2)
-                            {
-                                thresholdMotionValue = faces[faces.Count - 1].MotionPixelsAvg;
-                            }
+            //                //If motion is moving around then put a fadded butterfly on there. 
+            //                if(faces[faces.Count - 1].MotionPixelsAvg < thresholdMotionValue)
+            //                {
+            //                    int oindex = findOverlayIndexByName(rapidMotionOverlay);
+            //                    bm = appplyOverlayImage(bm, oindex, screenXpos, screenYpos, true);
+            //                }
+            //                else
+            //                {
+            //                    bm = appplyOverlayImage(bm, findOverlayIndexByFaceData(faces[faces.Count - 1]), screenXpos, screenYpos);
+            //                }
+            //                double deviation = (faces[faces.Count - 1].MotionPixelsAvg / thresholdMotionValue);
+            //                if (deviation > 5 || deviation<0.2)
+            //                {
+            //                    thresholdMotionValue = faces[faces.Count - 1].MotionPixelsAvg;
+            //                }
 
-                    }
-                    catch (Exception errint)
-                    {
-                        Console.WriteLine("ERROR - handleFacedScoredInput =" + errint);
-                    }
-                }
-            }
+            //        }
+            //        catch (Exception errint)
+            //        {
+            //            Console.WriteLine("ERROR - handleFacedScoredInput =" + errint);
+            //        }
+            //    }
+            //}
 
            return bm;        
         }

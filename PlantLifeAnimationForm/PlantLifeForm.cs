@@ -48,9 +48,10 @@ namespace PlantLifeAnimationForm
 
         public int lastFaceIndex = 0;
         public int lastFaceCount = 0;
+        public int plantImageIndex = 0;
 
         public int reloadDirIndex = 0;
-        public string[] reloaddir = {"images/zone1","images/zone2","images/main", "images/Matrix", "images/complex", "images/Pond", "images/Fireworks"};
+        public string[] reloaddir = {"images/welcome","images/z1c1","images/z1c2", "images/z2brtcolor", "images/z3spider", "images/complex", "images/Fireworks"};
 
         public int reloadDirIndexOver = 0;
         public string[] reloaddirOver = { "images/butterfly", "images/spiders" , "images/butterfly4", "images/butterfly2", "images/butterfly3", "images/butterfly7" };
@@ -111,7 +112,10 @@ namespace PlantLifeAnimationForm
 
         void updatePlantImage()
         {
-            PlantLifePicture.Image = plantlifeImages.handleFacedScoredInput(faceCapture.Faces);
+            if (++plantImageIndex >= plantlifeImages.plantLifeImages.Count)
+                plantImageIndex = 0;
+            PlantLifePicture.Image = plantlifeImages.handleFacedScoredInput(faceCapture.Faces, plantImageIndex);
+
         }
 
         void faceCapture_ImageCaptured(object sender)
@@ -253,7 +257,7 @@ namespace PlantLifeAnimationForm
             {
                 Console.WriteLine("F9 key pressed change baseimage bg index = " + reloadDirIndex);
                 plantlifeImages.reloadImages(reloaddir[this.reloadDirIndex++]);
-
+                plantImageIndex = 0;
                 if (reloadDirIndex >= reloaddir.Length)
                     reloadDirIndex = 0;
             }
