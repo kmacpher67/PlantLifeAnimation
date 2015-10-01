@@ -103,6 +103,9 @@ namespace PlantLifeAnimationForm
             //capture = new Capture();
         }
 
+        /// <summary>
+        /// start and initial motion capture
+        /// </summary>
         public void StartCapture()
         {
             Console.WriteLine("StartCapture");
@@ -112,6 +115,9 @@ namespace PlantLifeAnimationForm
             Application.Idle += ProcessFrame;
         }
 
+        /// <summary>
+        /// stop and displose of capture device
+        /// </summary>
         public void StopCapture()
         {
             Console.WriteLine("StopCapture");
@@ -126,11 +132,12 @@ namespace PlantLifeAnimationForm
             }
         }
 
-        public List<Face> GetFaces(int numFaces)
-        {
-            return GetFaces(numFaces, 75);
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="numFaces"></param>
+        /// <param name="minScore"></param>
+        /// <returns></returns>
         public List<Face> GetFaces(int numFaces, int minScore)
         {
             int frameCount = 0;
@@ -168,48 +175,24 @@ namespace PlantLifeAnimationForm
             return foundfaces;
         }
 
-        //public async Task<List<Face>> GetFacesAsync(int numFaces)
-        //{
-        //    return await Task.Run(() => this.GetFaces(numFaces));
-        //}
-
-        //public async Task<List<Face>> GetFacesAsync(int numFaces, int minScore)
-        //{
-        //    return await Task.Run(() => this.GetFaces(numFaces, minScore));
-        //}
-
-        public Face GetFace()
-        {
-            return this.GetFace(75);
-        }
-
-        public Face GetFace(int minScore)
-        {
-            List<Face> foundfaces = new List<Face>();
-            foundfaces = this.GetFaces(1, minScore);
-            return foundfaces.FirstOrDefault();
-        }
-
-        //public async Task<Face> GetFaceAsync()
-        //{
-        //    return await Task.Run(() => this.GetFace());
-        //}
-
-        //public async Task<Face> GetFaceAsync(int minScore)
-        //{
-        //    return await Task.Run(() => this.GetFace(minScore));
-        //}
-
+        /// <summary>
+        /// first best face score
+        /// </summary>
+        /// <returns></returns>
         public Face GetBestCapturedFace()
         {
             return GetBestCapturedFaces(1).FirstOrDefault();
         }
 
+        /// <summary>
+        /// gets list of faces based scores
+        /// </summary>
+        /// <param name="facecount"></param>
+        /// <returns></returns>
         public List<Face> GetBestCapturedFaces(int facecount)
         {
             return Faces.OrderByDescending(f => f.FaceScore).Take(facecount).ToList();
         }
-
 
         /// <summary>
         /// main element of capturing the camera and playing back. 
@@ -219,18 +202,29 @@ namespace PlantLifeAnimationForm
         /// <param name="arg"></param>
         private void ProcessFrame(object sender, EventArgs arg)
         {
-
             Mat mat = capture.QueryFrame();
+            if(mat==null)
+            {
+                Console.WriteLine("CAMERA CONNECTED????   MAT NULL");
+                return;
+            }
             Image<Bgr, Byte> ImageFrame = mat.ToImage<Bgr, Byte>();
             if ((frameCount++)%27==0)
                 Console.WriteLine("FaceCapture ProcessFrame start frameCount=" + frameCount + " datetime" + DateTime.Now);
 
+            this.processNewFaceImages(mat, ImageFrame);
             if (ImageCaptured != null)
             {
                 ImageFrameLast = ImageFrame;
-                ImageCaptured(this);
+                ImageCaptured(this); //FIRE event for registered handlers. 
             }
 
+            if (motions.Count > 100)
+                motions.RemoveRange(0, 10);
+        }
+
+        void processNewFaceImages(Mat mat, Image<Bgr, Byte> ImageFrame)
+        {
             //  array of motion info MotionInfo motion =
             motions.Add(this.GetMotionInfo(mat));
 
@@ -256,10 +250,7 @@ namespace PlantLifeAnimationForm
                     Faces.Add(face);
                 }
             }
-            if (motions.Count > 100)
-            {
-                motions.RemoveRange(0, 10);
-            }
+
         }
 
         private bool calculateMotion()
@@ -312,10 +303,10 @@ namespace PlantLifeAnimationForm
             #endregion
 
             //create the motion image 
-            Image<Bgr, Byte> motionImage = new Image<Bgr, byte>(motionMask.Size);
-            //display the motion pixels in blue (first channel)
-            //motionImage[0] = motionMask;
-            CvInvoke.InsertChannel(motionMask, motionImage, 0);
+            //Image<Bgr, Byte> motionImage = new Image<Bgr, byte>(motionMask.Size);
+            ////display the motion pixels in blue (first channel)
+            ////motionImage[0] = motionMask;
+            //CvInvoke.InsertChannel(motionMask, motionImage, 0);
 
             //Threshold to define a motion area, reduce the value to detect smaller motion
             minArea = 100;
@@ -328,36 +319,44 @@ namespace PlantLifeAnimationForm
              rects = boundingRect.ToArray();
          }
 
-         //iterate through each of the motion component
-         foreach (Rectangle comp in rects)
-         {
-            int area = comp.Width * comp.Height;
-            //reject the components that have small area;
-            _motionHistory.MotionInfo(_forgroundMask, comp, out angle, out motionPixelCount);
-            if (area < minArea) continue;
-            else
-            {
-                overallangle = overallangle + angle; 
-                totalPixelCount = totalPixelCount + motionPixelCount;
-                objectCount = objectCount + 1;
-                motionArea = motionArea + area; 
-            }
+            // REMOVED THIS COSTS TOO MUCH TO ITERATE
+
+            ////iterate through each of the motion component
+            //foreach (Rectangle comp in rects)
+            //{
+            //   int area = comp.Width * comp.Height;
+            //   //reject the components that have small area;
+            //   _motionHistory.MotionInfo(_forgroundMask, comp, out angle, out motionPixelCount);
+            //   if (area < minArea) continue;
+            //   else
+            //   {
+            //       overallangle = overallangle + angle; 
+            //       totalPixelCount = totalPixelCount + motionPixelCount;
+            //       objectCount = objectCount + 1;
+            //       motionArea = motionArea + area; 
+            //   }
 
             // find the angle and motion pixel count of the specific area
 
             ////Draw each individual motion in red
             //DrawMotion(motionImage, comp, angle, new Bgr(Color.Red));
-         }
+            //}
+
+            // find and draw the overall motion angle
+            double overallAngle, overallMotionPixelCount;
+            _motionHistory.MotionInfo(_forgroundMask, new Rectangle(Point.Empty, motionMask.Size), out overallAngle, out overallMotionPixelCount);
+
             motionInfoObj.MotionArea = motionArea; 
-            motionInfoObj.OverallAngle = overallangle;
+            motionInfoObj.OverallAngle = overallAngle;
             motionInfoObj.BoundingRect = rects;
             motionInfoObj.TotalMotions = rects.Length;
             motionInfoObj.MotionObjects = objectCount;
-            motionInfoObj.MotionPixels = totalPixelCount;
-            averagetotalPixelCount = 0.75 * averagetotalPixelCount + 0.25 * totalPixelCount;
+            motionInfoObj.MotionPixels = overallMotionPixelCount;
+            averagetotalPixelCount = 0.75 * averagetotalPixelCount + 0.25 * overallMotionPixelCount;
             if ( Math.Abs(averagetotalPixelCount - totalPixelCount) / averagetotalPixelCount > 0.69)
                 Console.WriteLine(" GetMotionInfo - Total Motions found: " + rects.Length + "; Motion Pixel count: " + totalPixelCount);
-         return motionInfoObj;
+            motionInfoObj.SmoothedAvg = averagetotalPixelCount;
+            return motionInfoObj;
         }
     }
 }
