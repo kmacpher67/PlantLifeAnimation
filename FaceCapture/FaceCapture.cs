@@ -22,6 +22,7 @@ namespace PlantLifeAnimationForm
     {
         private Capture capture;
         private MotionHistory _motionHistory;
+        public List<MotionInfo> motions = new List<MotionInfo>();
         private BackgroundSubtractor foregroundDetector;
         public string FaceTrainingFile { get; set; }
         public string EyeTrainingFile { get; set; }
@@ -230,26 +231,48 @@ namespace PlantLifeAnimationForm
                 ImageCaptured(this);
             }
 
-            MotionInfo motion = this.GetMotionInfo(mat);
-
-            reductionRatio = (double)reductionWidth / (double)ImageFrame.Width;
-
-            List<Face> FoundFaces = FaceDetector.FindFaces(ImageFrame.Resize(reductionRatio,Inter.Cubic), this.FaceTrainingFile, this.EyeTrainingFile, this.Scale, this.Neighbors, this.FaceMinSize);
-
-            foreach (Face face in FoundFaces)
+            //  array of motion info MotionInfo motion =
+            motions.Add(this.GetMotionInfo(mat));
+            if (motions.Count > 100)
             {
-                face.MotionObjects = motion.MotionObjects;
-                face.MotionPixels = motion.MotionPixels;
-                motionPixelsAvg = motionPixelsAvg*motionPixelsSmooth + motion.MotionPixels*(1-motionPixelsSmooth);
-                face.MotionPixelsAvg = motionPixelsAvg;
-
-                if (FaceCaptured != null)
-                {
-                    FaceCaptured(this, face);
-                }
-                Faces.Add(face);
+                motions.RemoveRange(0, 10);
             }
+            bool changed = calculateMotion();
+            // only calc face stuff if changes are big. 
+            if (Faces.Count < 1 || changed)
+            {
+                reductionRatio = (double)reductionWidth / (double)ImageFrame.Width;
 
+                List<Face> FoundFaces = FaceDetector.FindFaces(ImageFrame.Resize(reductionRatio, Inter.Cubic), this.FaceTrainingFile, this.EyeTrainingFile, this.Scale, this.Neighbors, this.FaceMinSize);
+
+                foreach (Face face in FoundFaces)
+                {
+                    face.MotionObjects = motions.Last().MotionObjects;
+                    face.MotionPixels = motions.Last().MotionPixels;
+                    motionPixelsAvg = motionPixelsAvg * motionPixelsSmooth + motions.Last().MotionPixels * (1 - motionPixelsSmooth);
+                    face.MotionPixelsAvg = motionPixelsAvg;
+
+                    if (FaceCaptured != null)
+                    {
+                        FaceCaptured(this, face);
+                    }
+                    Faces.Add(face);
+                }
+            }
+        }
+
+        private bool calculateMotion()
+        {
+            bool isKewl = true;
+            if (motions.Count < 2)
+                return false; 
+
+            MotionInfo motionCur = motions.Last();
+
+            if (motionCur.BoundingRect.Count() < 1)
+                return false; 
+
+            return isKewl;
         }
 
         private MotionInfo GetMotionInfo(Mat image)

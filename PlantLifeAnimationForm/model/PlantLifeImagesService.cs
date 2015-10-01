@@ -118,6 +118,8 @@ namespace PlantLifeAnimationForm
         public Bitmap getPlantLifeImageByKey(int p = 0)
         {
             Bitmap overlayImage = (Bitmap)plantLifeImagesOver[0].PlantImage.Clone();
+            if (p < 0)
+                return overlayImage;
 
             try
             {
