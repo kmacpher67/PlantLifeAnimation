@@ -62,8 +62,8 @@ namespace PlantLifeAnimationForm
                                     clone.AvgSdv(out avgf, out avstd);
                                     facemodel.StdDev = avstd.V0;
                                     faces.Add(facemodel);
-                                    if (facemodel.FaceScore > 39)
-                                        Console.WriteLine("FaceDetect OpenCL Add faceModel" + facemodel.FaceScore);
+                                    if (faces.Count%5==0)
+                                        Console.WriteLine("FaceDetect OpenCL every5 Add faceModel" + facemodel.Width);
 
                                     break;
                                 }

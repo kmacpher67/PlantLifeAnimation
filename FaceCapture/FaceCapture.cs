@@ -40,7 +40,7 @@ namespace PlantLifeAnimationForm
         public int reductionWidth = 640;
         public double reductionRatio = 1; // assumes input source is 320x200;  1/2 640/400
 
-        public double motionHistoryDuration = 1.0;
+        public double motionHistoryDuration = 1.1;
         public double maxDelta = 0.05;
         public double minDelta = 0.5;
 
@@ -65,7 +65,7 @@ namespace PlantLifeAnimationForm
         public event ImageCapturedEventHandler ImageCaptured;
 
         public FaceCapture(string faceTrainingFile, string eyeTrainingFile)
-            : this(faceTrainingFile, eyeTrainingFile, 1.1, 8, 80)
+            : this(faceTrainingFile, eyeTrainingFile, 1.1, 8, 10)
         {
 
         }

@@ -36,14 +36,14 @@ namespace PlantLifeAnimationForm
         string eyeTrainingFile = "haar\\haarcascade_eye.xml";
         string faceTrainingFileCuda = "haar_cuda\\haarcascade_frontalface_default.xml";
         string eyeTrainingFileCuda = "haar_cuda\\haarcascade_eye.xml";
-        double FaceScale = 1.1;
-        int FaceNieghbors = 5;
-        int FaceMinSize = 20;
+        double FaceScale = 1.15;
+        int FaceNieghbors = 3;
+        int FaceMinSize = 10;
         int FaceMaxSize = 200;
-        double EyeScale = 1.1;
+        double EyeScale = 1.15;
         int EyeNieghbors = 1;
         int EyeMinSize = 4;
-        int EyeMaxSize = 64;
+        int EyeMaxSize = 48;
         #endregion
 
         public int lastFaceIndex = 0;

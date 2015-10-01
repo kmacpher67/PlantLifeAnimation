@@ -38,7 +38,7 @@ namespace PlantLifeAnimationForm
 
             foreach (Rectangle f in facesDetected)
             {
-                if (f.Width<80)
+                if (f.Width<35)
                     break;
                 gray.ROI = f;
 
@@ -57,7 +57,8 @@ namespace PlantLifeAnimationForm
                     faceModel.StdDev = avstd.V0;
 
                     currentFaces.Add(faceModel);
-                    Console.WriteLine("FaceDetect Add faceModel" + faceModel.FaceScore);
+                    if(currentFaces.Count%5==0)
+                        Console.WriteLine("FaceDetect Add every 5 faceModel" + faceModel.Width);
                     break;
                 }
                 gray.ROI = Rectangle.Empty;
