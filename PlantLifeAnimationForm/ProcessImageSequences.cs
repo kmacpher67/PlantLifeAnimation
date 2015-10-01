@@ -69,7 +69,7 @@ namespace PlantLifeAnimationForm
                     Image<Bgr, Byte> ImageFrame = mat.ToImage<Bgr, Byte>();
                     paintingJPEGMov.Add(ImageFrame);
                     paintingJPEGMovIndex++;
-                    Thread.Sleep(15);
+                    Thread.Sleep(5);
                 }
 
             }

@@ -17,14 +17,17 @@ namespace PlantLifeAnimationForm
         public int currentOverlayIndex = 0;
         public int currentOverlayFrame = 0;
         public List<Int16> currentOverlayFrames = new List<Int16>();
-        public Size frameSize = new Size(1062, 573);
+        public Size frameSize = new Size(640, 480);
 
         public double thresholdMotionValue = 9999;
         public string rapidMotionOverlay = "images/butterfly\\animated-butterfly-image-0005.gif"; 
 
         public PlantLifeImagesService()
         {
-            Bitmap bmONE =  getImageFromFile("images/butterfly/animated-butterfly-image-0005.gif");
+            //Bitmap bmONE =  getImageFromFile("images/butterfly/animated-butterfly-image-0005.gif");
+            PlantLifeImage pli = new PlantLifeImage();
+            pli.PlantImage = getImageFromFile("images\\zone2\\sh-57sec-slow.gif");
+            //plantLifeImagesOver.Add(pli);
 
             loadMovie(); // load background complex as .mov frame by frame. 
             //loadImages("images/complex");
@@ -49,23 +52,29 @@ namespace PlantLifeAnimationForm
                         int plantlifeindex = (int)(1.0 * faceWidth / FaceScoring.FaceSizeMax * plantLifeImages.Count);
                         plantlifeindex = (plantlifeindex >= plantLifeImages.Count) ? plantLifeImages.Count - 1 : plantlifeindex;
                         bm = plantLifeImages[plantlifeindex].PlantImage;
-                        if (faces[faces.Count - 1].FramePosX > 99)
-                        {
+
                             if (faces.Count%5==0)
                                 Console.WriteLine(" -- plantlifeindex=" + plantlifeindex + " framePosX=" + faces[faces.Count - 1].FramePosX);
                             // TODO stubbed out overlay image onto another image trickery
-                            bm = appplyOverlayImage(bm, findOverlayIndexByFaceData(faces[faces.Count - 1]));
+                            int screenXpos = bm.Size.Width* faces[faces.Count - 1].FramePosX / frameSize.Width;
+                            int screenYpos = bm.Size.Height * faces[faces.Count - 1].FramePosY / frameSize.Height;
+
+                            //If motion is moving around then put a fadded butterfly on there. 
                             if(faces[faces.Count - 1].MotionPixelsAvg>thresholdMotionValue)
                             {
                                 int oindex = findOverlayIndexByName(rapidMotionOverlay);
-                                bm = appplyOverlayImage(bm, oindex);
+                                bm = appplyOverlayImage(bm, oindex, screenXpos, screenYpos, true);
+                            }
+                            else
+                            {
+                                bm = appplyOverlayImage(bm, findOverlayIndexByFaceData(faces[faces.Count - 1]), screenXpos, screenYpos);
                             }
                             double deviation = (faces[faces.Count - 1].MotionPixelsAvg / thresholdMotionValue);
                             if (deviation > 5 || deviation<0.2)
                             {
                                 thresholdMotionValue = faces[faces.Count - 1].MotionPixelsAvg;
                             }
-                        }
+
                     }
                     catch (Exception errint)
                     {
@@ -125,7 +134,7 @@ namespace PlantLifeAnimationForm
         /// <param name="bm"></param>
         /// <param name="p"></param>
         /// <returns></returns>
-        public Bitmap appplyOverlayImage(Bitmap bm, int p = 0)
+        public Bitmap appplyOverlayImage(Bitmap bm, int p = 0, int overlayX =0, int overlayY = 0, bool fade = false)
         {
             //TODO overlay image2 onto image1
             try{
@@ -150,10 +159,24 @@ namespace PlantLifeAnimationForm
                         // TODO set the overlay position based on face head position
                         offsetX = bm.Width / 4;
                         offsetY = bm.Height / 4;
-                        g.DrawImage(img2, new Rectangle(offsetX, offsetY, img2.Width, img2.Height));
-                    //} 
+                    // Create a new color matrix and set the alpha value to 0.5
+                    ColorMatrix cm = new ColorMatrix();
+                    cm.Matrix00 = cm.Matrix11 = cm.Matrix22 = cm.Matrix44 = 1;
+                    cm.Matrix33 = 0.5f;
+
+                    // Create a new image attribute object and set the color matrix to
+                    // the one just created
+                    ImageAttributes ia = new ImageAttributes();
+                    ia.SetColorMatrix(cm);
+                    //g.DrawImage(img2, new Rectangle(offsetX, offsetY, img2.Width, img2.Height));
+                    // Draw the original image with the image attributes specified
+                    if (fade)
+                        g.DrawImage(img2, new Rectangle(overlayX, overlayY, img2.Width, img2.Height), 0, 0, img2.Width, img2.Height, GraphicsUnit.Pixel,ia);
+                    else
+                        g.DrawImage(img2, new Rectangle(overlayX, overlayY, img2.Width, img2.Height));
+
                 }
-                bm=finalImage;
+                bm =finalImage;
             }
             catch(Exception errbm)
             {

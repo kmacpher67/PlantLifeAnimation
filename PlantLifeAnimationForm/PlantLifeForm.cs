@@ -52,7 +52,7 @@ namespace PlantLifeAnimationForm
         public string[] reloaddir = {"images/zone1","images/zone2","images/zone3", "images/Matrix", "images/Pond", "images/Fireworks"};
 
         public int reloadDirIndexOver = 0;
-        public string[] reloaddirOver = { "images/butterfly" };
+        public string[] reloaddirOver = { "images/butterfly", "images/spiders" , "images/DeadFish" };
 
         public PlantLifeForm()
         {
