@@ -140,11 +140,10 @@ namespace PlantLifeAnimationForm
                        displayFaceData,
                        new System.Drawing.Point(1, 60),
                        FontFace.HersheyComplex,
-                       rs / 8,
+                       rs * 8,
                        new Bgr(0, 0, 255).MCvScalar);
                     peoplePicture.Image = currentFrame.Resize(rs, Inter.Cubic).ToBitmap();
-                    // only update plant image if the face is any good. 
-                    updatePlantImage();
+
                 }
                 else if (lastFaceIndex > 1)
                 {
@@ -302,9 +301,6 @@ namespace PlantLifeAnimationForm
             this.PlantLifePicture.Dock = DockStyle.Fill;
             plantlifeImages.frameSize = PlantLifePicture.Size;
         }
-
-
-
 
 
     }
