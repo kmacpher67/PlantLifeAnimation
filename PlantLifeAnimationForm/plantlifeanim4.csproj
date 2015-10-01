@@ -213,10 +213,14 @@
     <Content Include="images\Blue_sky_daytime_Flag.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="images\butterfly2\57c88a48ad37ddf0137c87c8d09d6066.gif" />
+    <Content Include="images\butterfly2\butterflies6.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="images\butterfly\animated-butterfly-image-0004.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\butterfly\animated-butterfly-image-0005.gif">
+    <Content Include="images\butterfly4\animated-butterfly-image-0005.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\butterfly\animated-butterfly-image-0026.gif">
@@ -225,13 +229,13 @@
     <Content Include="images\butterfly\animated-butterfly-image-0030.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\butterfly\butterflies6.gif">
+    <Content Include="images\butterfly3\butterflies6.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\butterfly\butterfly.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\butterfly\butterfly7.gif">
+    <Content Include="images\butterfly7\butterfly7.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\butterfly\Butterfly8.gif">

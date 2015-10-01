@@ -26,8 +26,10 @@ namespace PlantLifeAnimationForm
         {
             //Bitmap bmONE =  getImageFromFile("images/butterfly/animated-butterfly-image-0005.gif");
             PlantLifeImage pli = new PlantLifeImage();
-            pli.PlantImage = getImageFromFile("images\\zone2\\sh-57sec-slow.gif");
-            //plantLifeImagesOver.Add(pli);
+            //pli.PlantImage = getImageFromFile("images\\zone2\\sh-57sec-slow.gif");
+            //pli.PlantImage = getImageFromFile("images\\fade\\sh-trans-colorized.gif");
+            pli.PlantImage = getImageFromFile("images\\butterfly3\\butterflies6.gif");
+            plantLifeImagesOver.Add(pli);
 
             loadMovie(); // load background complex as .mov frame by frame. 
             //loadImages("images/complex");
@@ -60,7 +62,7 @@ namespace PlantLifeAnimationForm
                             int screenYpos = bm.Size.Height * faces[faces.Count - 1].FramePosY / frameSize.Height;
 
                             //If motion is moving around then put a fadded butterfly on there. 
-                            if(faces[faces.Count - 1].MotionPixelsAvg>thresholdMotionValue)
+                            if(faces[faces.Count - 1].MotionPixelsAvg < thresholdMotionValue)
                             {
                                 int oindex = findOverlayIndexByName(rapidMotionOverlay);
                                 bm = appplyOverlayImage(bm, oindex, screenXpos, screenYpos, true);

@@ -49,10 +49,10 @@ namespace PlantLifeAnimationForm
         public int lastFaceIndex = 0; 
 
         public int reloadDirIndex = 0;
-        public string[] reloaddir = {"images/zone1","images/zone2","images/zone3", "images/Matrix", "images/Pond", "images/Fireworks"};
+        public string[] reloaddir = {"images/zone1","images/zone2","images/main", "images/Matrix", "images/complex", "images/Pond", "images/Fireworks"};
 
         public int reloadDirIndexOver = 0;
-        public string[] reloaddirOver = { "images/butterfly", "images/spiders" , "images/DeadFish" };
+        public string[] reloaddirOver = { "images/butterfly", "images/spiders" , "images/butterfly4", "images/butterfly2", "images/butterfly3", "images/butterfly7" };
 
         public PlantLifeForm()
         {
@@ -248,15 +248,25 @@ namespace PlantLifeAnimationForm
         {
             if (e.KeyCode == Keys.F9)
             {
-                Console.WriteLine("F9 key pressed");
+                Console.WriteLine("F9 key pressed change baseimage bg index = " + reloadDirIndex);
                 plantlifeImages.reloadImages(reloaddir[this.reloadDirIndex++]);
 
                 if (reloadDirIndex >= reloaddir.Length)
                     reloadDirIndex = 0;
-                
             }
 
-            if (e.KeyCode == Keys.F11)
+
+            if (e.KeyCode == Keys.F8)
+            {
+                Console.WriteLine("PRESSED F8 key change load overlay index ="+ reloadDirIndexOver);
+                plantlifeImages.plantLifeImagesOver.Clear();
+                plantlifeImages.currentOverlayFrame = 0;
+                plantlifeImages.loadOverlayImages(reloaddirOver[this.reloadDirIndexOver++]);
+                if (reloadDirIndexOver >= reloaddirOver.Length)
+                    reloadDirIndexOver = 0;
+            }
+
+                if (e.KeyCode == Keys.F11)
             {
                 Console.WriteLine("F11 KEY PRESSED");
                 if (this.WindowState == FormWindowState.Maximized)
