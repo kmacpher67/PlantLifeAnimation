@@ -77,7 +77,7 @@ namespace PlantLifeAnimationForm
                         int faceWidth = faces[faces.Count - 1].Width;
                         int plantlifeindex = (int)(1.0 * faceWidth / FaceScoring.FaceSizeMax * plantLifeImages.Count);
                         plantlifeindex = (plantlifeindex >= plantLifeImages.Count) ? plantLifeImages.Count - 1 : plantlifeindex;
-                        bm = plantLifeImages[plantlifeindex].PlantImage;
+                        bm = plantLifeImages[imageSeq].PlantImage;
 
                         if (faces.Count % 5 == 0)
                             Console.WriteLine(" -- plantlifeindex=" + plantlifeindex + " framePosX=" + faces[faces.Count - 1].FramePosX);

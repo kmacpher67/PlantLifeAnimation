@@ -185,12 +185,13 @@ namespace PlantLifeAnimationForm
             if ((frameCount++)%10==0)
                 Console.WriteLine("FC ProcessFrame fc=" + frameCount + " dt=" + DateTime.Now + " tmo="+timermotion.Elapsed + " tface=" + timerfaces.Elapsed);
 
-            this.processNewFaceImages(mat, ImageFrame);
             if (ImageCaptured != null)
             {
                 ImageFrameLast = ImageFrame;
                 ImageCaptured(this); //FIRE event for registered handlers. 
             }
+
+            this.processNewFaceImages(mat, ImageFrame);
 
             if (motions.Count > 100)
                 motions.RemoveRange(0, 10);
@@ -218,21 +219,22 @@ namespace PlantLifeAnimationForm
             List<Face> FoundFaces = await Task.Run(() => FaceDetector.FindFaces(ImageFrame.Resize(reductionRatio, Inter.Cubic), FaceTrainingFile, EyeTrainingFile, Scale, Neighbors, FaceMinSize));
 
             timerfaces.Stop();
-            Debug.WriteLine(timerfaces.Elapsed);
+            Debug.WriteLine("async call background check faces="+timerfaces.Elapsed);
             foreach (Face face in FoundFaces)
             {
                 face.MotionObjects = motions.Last().MotionObjects;
                 face.MotionPixels = motions.Last().MotionPixels;
                 motionPixelsAvg = motionPixelsAvg * motionPixelsSmooth + motions.Last().MotionPixels * (1 - motionPixelsSmooth);
                 face.MotionPixelsAvg = motionPixelsAvg;
-
+                face.FaceImageFullColr = ImageFrame.Resize(reductionRatio, Inter.Cubic).ToBitmap();
+                Faces.Add(face);
+                timerlastfacecapture.Restart();
                 if (FaceCaptured != null)
                 {
                     FaceCaptured(this, face);
                 }
-                Faces.Add(face);
             }
-            timerlastfacecapture.Restart();
+
             faceProcessing = false;
         }
 
